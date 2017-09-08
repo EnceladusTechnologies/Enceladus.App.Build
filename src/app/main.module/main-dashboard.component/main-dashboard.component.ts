@@ -99,7 +99,14 @@ export class MainDashboardComponent implements OnInit {
       .getHistoricalPriceData(this.selectedCompany.ticker, this.startDate.toISOString().slice(0, 10), this.endDate.toISOString().slice(0, 10), forceRefresh)
       .subscribe(k => {
         setTimeout(() => {
-          this.companyPriceData = k;
+          this.companyPriceData = k.sort((a: PriceListItem,
+            b: PriceListItem) => {
+            if (a.date < b.date) {
+              return -1;
+            } else if (b.date < a.date) {
+              return 1;
+            }
+          });
           this.stockChart = AmCharts.makeChart('stockChart', {
             'type': 'serial',
             'theme': 'dark',
@@ -153,7 +160,7 @@ export class MainDashboardComponent implements OnInit {
     this.stockDetails = new StockDetailsViewModel(
       this.selectedCompany.ticker,
       this.selectedCompany.name,
-      this.getRandomLogo(),
+      '',
       '$98.72',
       '+ 0.57%',
       '+ $0.56',
@@ -310,22 +317,6 @@ export class MainDashboardComponent implements OnInit {
     });
   }
 
-  public getRandomLogo(): string {
-    const logos = [
-      'amazon',
-      'facebook',
-      'google',
-      'twitter',
-      'windows',
-      'etsy',
-      'apple',
-      'blackberry',
-      'pandora',
-      'spotify'
-    ];
-    return logos[Math.floor((Math.random() * 11))];
-  }
-
   public getData(evt: any) {
     this.getPriceData();
     this._mainService
@@ -363,7 +354,5 @@ export class MainDashboardComponent implements OnInit {
       }
     }
   }
-
-
 
 }

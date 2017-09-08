@@ -3,7 +3,6 @@ export const cacheKeys = {
     // companies
     companies: ':companies',
     companyDetails: ':company-details',
-    applePrices: 'apple-prices',
 
     // misc
     access_token: 'access_token',
