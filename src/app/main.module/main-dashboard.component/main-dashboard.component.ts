@@ -110,6 +110,7 @@ export class MainDashboardComponent implements OnInit {
           this.stockChart = AmCharts.makeChart('stockChart', {
             'type': 'serial',
             'theme': 'dark',
+            'addClassNames': true,
             'dataDateFormat': 'YYYY-MM-DD',
             'valueAxes': [{
               'position': 'left'
@@ -132,7 +133,8 @@ export class MainDashboardComponent implements OnInit {
               'valueField': 'close'
             }],
             'chartScrollbar': {
-              'enabled': false
+              'enabled': true,
+              'graphType': 'line'
             },
             'chartCursor': {
               'valueLineEnabled': true,
@@ -145,7 +147,7 @@ export class MainDashboardComponent implements OnInit {
             'dataProvider': this.companyPriceData,
             'export': {
               'enabled': true,
-              'position': 'top-right'
+              'position': 'bottom-right'
             }
           });
           this.isChartBusy = false;

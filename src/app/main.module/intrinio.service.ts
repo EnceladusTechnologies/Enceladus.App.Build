@@ -68,22 +68,23 @@ export class IntrinioService {
         // if (!forceRefresh && this._cacheService.exists(cacheKey)) {
         //     return Observable.of(this._cacheService.get(cacheKey));
         // } else {
-        return this._http.get(`${this._baseUrl}/prices?identifier=${ticker}`, this._opts)
+        /*return this._http.get(`${this._baseUrl}/prices?identifier=${ticker}`, this._opts)
             .map((resp: any) => {
                 const getResponse = <HttpGetResponse>resp.json();
                 // this._cacheService.set(cacheKey, <PriceListItem[]>getResponse.data, { maxAge: this._config.maxAge });
                 return <PriceListItem[]>getResponse.data;
             })
             .catch(this.handleError);
-        /*
-        return this._http.get(`${this._baseUrl}/historical_data?identifier=${ticker}&start_date=${startDate}&end_date=${endDate}`, this._opts)
+            */
+
+        return this._http.get(`${this._baseUrl}/prices?identifier=${ticker}&start_date=${startDate}&end_date=${endDate}&page_size=5000`, this._opts)
             .map((resp: any) => {
                 const getResponse = <HttpGetResponse>resp.json();
-                this._cacheService.set(cacheKey, <PriceListItem[]>getResponse.data, { maxAge: this._config.maxAge });
+                // this._cacheService.set(cacheKey, <PriceListItem[]>getResponse.data, { maxAge: this._config.maxAge });
                 return <PriceListItem[]>getResponse.data;
             })
             .catch(this.handleError);
-            */
+
         // }
     }
     public handleError(error: any) {
