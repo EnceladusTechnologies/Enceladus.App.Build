@@ -1,0 +1,4 @@
+export const INTRINIO_CONFIG = {
+    USERNAME: '8f10dc72c5fe3b7a5e41b28b247264b7',
+    PASSWORD: '5617ef50dd2b9fec7d4d1188f4bd6b75'
+};

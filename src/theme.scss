@@ -1,0 +1,45 @@
+@import '~@angular/material/theming';
+@include mat-core();
+
+$black-87-opacity: rgba(black, 0.87);
+$white-87-opacity: rgba(white, 0.87);
+
+$mat-enceladus: (
+    50: #B52329,
+    100: #B52329,
+    200: #B52329,
+    300: #B52329,
+    400: #B52329,
+    500: #B52329,
+    600: #B52329,
+    700: #B52329,
+    800: #B52329,
+    900: #B52329,
+    A100: #B52329,
+    A200: #B52329,
+    A400: #B52329,
+    A700: #B52329,
+    contrast: (
+      50: $black-87-opacity,
+      100: $black-87-opacity,
+      200: $black-87-opacity,
+      300: $black-87-opacity,
+      400: $black-87-opacity,
+      500: white,
+      600: white,
+      700: white,
+      800: $white-87-opacity,
+      900: $white-87-opacity,
+      A100: $black-87-opacity,
+      A200: white,
+      A400: white,
+      A700: white,
+    )
+  );
+
+$primary: mat-palette($mat-grey, 300);
+$accent:  mat-palette($mat-enceladus, 500);
+$warn:    mat-palette($mat-red, 300);
+$theme: mat-dark-theme($primary, $accent, $warn);
+
+@include angular-material-theme($theme);

@@ -1,0 +1,376 @@
+@import '~@angular/material/theming';
+
+html {
+    margin: 0;
+    height: 100%;
+}
+body {
+    overflow: hidden;
+    background: #303030;
+     height: 100%;
+     font-family: Roboto,Helvetica Neue Light,Helvetica Neue,Helvetica,Arial,Lucida Grande,sans-serif;
+     margin: 0px;
+ }
+
+// PRELOADER 
+#init-spinner-container {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin: -20px 0 0 -20px;
+}
+.init-spinner {
+      height: 40px;
+    width: 40px;
+    position: relative;
+    -webkit-animation: rotation .8s infinite linear;
+    -moz-animation: rotation .8s infinite linear;
+    -o-animation: rotation .8s infinite linear;
+    animation: rotation .8s infinite linear;
+    border-left: 3px solid rgba(255, 255, 255, 0.5);
+    border-right: 3px solid rgba(255, 255, 255, 0.5);
+    border-bottom: 3px solid rgba(255, 255, 255, 0.5);
+    border-top: 3px solid rgba(181,35,41,.8);
+    border-radius: 100%;
+
+}
+#preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #303030;
+    z-index: 9999999;
+}
+@-webkit-keyframes rotation { 
+	from {
+	    -webkit-transform: rotate(0deg)
+	}
+	to {
+	    -webkit-transform: rotate(359deg)
+	}
+}
+@-moz-keyframes rotation { 
+	from {
+	    -moz-transform: rotate(0deg)
+	}
+	to {
+	    -moz-transform: rotate(359deg)
+	}
+}
+@-o-keyframes rotation { 
+	from {
+	    -o-transform: rotate(0deg)
+	}
+	to {
+	    -o-transform: rotate(359deg)
+	}
+}
+@keyframes rotation { 
+	from {
+	    transform: rotate(0deg)
+	}
+	to {
+	    transform: rotate(359deg)
+	}
+}
+
+// SNACKBAR
+.error-snackbar {
+    background: #a94442 !important;
+}
+.info-snackbar {
+    background: #0075be !important;
+}
+.success-snackbar {
+    background: #42A948 !important;
+}
+
+
+// ICONS
+.md-stack {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    vertical-align: middle;
+  }
+  .md-stack-1x:before {
+      height: 50px;
+  }
+  .md-stack-2x:before {
+      height: 50px;
+  }
+  .md-stack-1x {
+      text-align: center;
+      left: 2px;
+      font-size: 24px;
+      height: 50px !important;
+      line-height: 50px  !important;
+      width: 50px  !important;
+      top: 0;
+      position: absolute;
+  }
+  .md-stack-2x {
+      position: absolute;
+      left: 0;
+      text-align: center;
+      font-size: 50px;
+      width: 50px;
+      height: 50px;
+      line-height: 50px;
+  }
+  md-icon.mdi-flip-horizontal {
+      transform: scale(-1,1);
+  }
+  
+  // -- 14px -- //
+  md-icon.mdi-14px {
+      width: 14px;
+      height: 14px;
+      line-height: 14px;
+  }
+  .mdi-14px:before {
+      font-size: 14px;
+  }
+  
+  // -- 18px -- //
+  md-icon.mdi-18px {
+      width: 18px !important;
+      height: 18px !important;
+      line-height: 18px !important;
+  }
+  .mdi-18px:before {
+      font-size: 18px;
+      height: 18px !important;
+  }
+  
+  // -- 24px -- //
+  md-icon.mdi-24px {
+      line-height: 24px;
+      width: 24px;
+      height: 24px;
+  }
+  .mdi-24px:before {
+      font-size: 24px;
+  }
+  
+  // -- 32px -- //
+  md-icon.mdi-32px {
+      width: 32px;
+      height: 32px;
+      line-height: 32px;
+  }
+  .mdi-32px:before {
+      font-size: 32px;
+  }
+  // -- 40px -- //
+  md-icon.mdi-40px {
+      width: 40px !important;
+      height: 40px !important;
+      line-height: 40px !important;
+  }
+  .mdi-40px:before {
+      font-size: 40px;
+      height: 40px !important;
+  }
+  
+  // -- 45px -- //
+  md-icon.mdi-45px {
+      width: 45px;
+      height: 45px;
+      line-height: 45px;
+  }
+  .mdi-45px:before {
+      font-size: 45px;
+  }
+  
+  // -- 50px -- //
+  md-icon.mdi-50px {
+      width: 50px;
+      height: 50px;
+      line-height: 50px;
+  }
+  .mdi-50px:before {
+      font-size: 50px;
+  }
+  
+  // -- 60px -- //
+  md-icon.mdi-60px {
+      width: 60px;
+      height: 60px;
+      line-height: 60px;
+  }
+  .mdi-60px:before {
+      font-size: 60px;
+  }
+  
+  // -- 80px -- //
+  md-icon.mdi-80px {
+      width: 80px;
+      height: 80px;
+      line-height: 80px;
+  }
+  .mdi-80px:before {
+      font-size: 80px;
+  }
+  
+  // -- 120px -- //
+  md-icon.mdi-120px {
+      width: 120px;
+      height: 120px;
+      line-height: 120px;
+  }
+  .mdi-120px:before {
+      font-size: 120px;
+  }
+  
+  
+  .mdi-bold:before {
+      font-weight: 900;
+  }
+  
+  .mdi-lightweight:before {
+      font-weight: 200;
+  }
+  md-icon.muted {
+      color: rgba(0, 0, 0, 0.38);
+  }
+  md-icon.warn {
+      color: #a94442;
+  }
+  md-icon.primary {
+      color: #0075be;
+  }
+  md-icon.accent {
+      color: #cb6828;
+  }
+  md-icon.success {
+      color: #388e3c;
+  }
+  md-icon.spin {
+       -webkit-animation: rotation .8s infinite linear;
+      -moz-animation: rotation .8s infinite linear;
+      -o-animation: rotation .8s infinite linear;
+      animation: rotation .8s infinite linear;
+  }
+  .mdi-margin-side-10px {
+      margin: 0 10px 0 10px;
+  }
+  .mdi-margin-top-4px {
+      margin-top: 4px;
+  }
+  
+
+  // MD OVERRIDES
+
+  div.mat-tooltip.ng-trigger.ng-trigger-state.text-no-wrap {
+    white-space: nowrap !important;
+  }
+
+  
+.nav-toolbar {
+    min-height: 56px !important;
+    height: 56px !important;
+    box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12) !important;
+}
+
+  .nav-toolbar div.mat-toolbar-layout md-toolbar-row {
+    height: 56px !important;
+}
+
+md-form-field {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.mat-input-underline.mat-form-field-underline {
+    background-color: #ebebeb;
+}
+.cdk-global-scrollblock {
+    overflow-y: hidden !important;
+}
+
+
+md-expansion-panel-header.selected-panel.mat-expansion-panel-header.mat-expanded {
+    background-color: #B52329;
+}
+md-expansion-panel-header.selected-panel.mat-expansion-panel-header.mat-expanded span.mat-content span {
+    color: white;
+}
+md-expansion-panel-header.selected-panel.mat-expansion-panel-header.mat-expanded {
+    padding: 8px 18px;
+}
+md-expansion-panel-header.selected-panel.mat-expansion-panel-header span.mat-content span {
+     color: rgba(0, 0, 0, 0.87);
+}
+md-expansion-panel-header.selected-panel.mat-expansion-panel-header {
+    padding: 8px 18px;
+}
+
+.search-container {
+    box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+    margin-bottom: 12px;
+}
+.mat-expansion-panel-body {
+    padding: 0 !important;
+}
+
+.mat-expansion-panel-header-title {
+    margin-right: 4px !important;
+}
+
+a[href="http://www.amcharts.com/javascript-charts/"] {
+    display: none !important;
+}
+
+a {
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.7);
+}
+a:hover,
+a:focus {
+    text-decoration: none;
+    color: rgba(255, 255, 255, 1);
+}
+
+/// Mixin to customize scrollbars
+/// Beware, this does not work in all browsers
+/// @author Hugo Giraudel
+/// @param {Length} $size - Horizontal scrollbar's height and vertical scrollbar's width
+/// @param {Color} $foreground-color - Scrollbar's color
+/// @param {Color} $background-color [mix($foreground-color, white, 50%)] - Scrollbar's color
+/// @example scss - Scrollbar styling
+///   @include scrollbars(.5em, slategray);
+@mixin scrollbars($size, $foreground-color, $background-color) {
+    // For Google Chrome
+    ::-webkit-scrollbar {
+        width:  $size;
+        height: $size;
+    }
+  
+    ::-webkit-scrollbar-thumb {
+        background: $foreground-color;
+    }
+  
+    ::-webkit-scrollbar-track {
+        background: $background-color;
+    }
+  
+    // For Internet Explorer
+    body {
+      scrollbar-face-color: $foreground-color;
+      scrollbar-track-color: $background-color;
+    }
+  }
+
+  @include scrollbars(.5em, rgba(255, 255, 255, 0.3), rgba(0, 0, 0, 0.4));
+
+  button.mat-icon-button.md-icon-button-sm {
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+}

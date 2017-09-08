@@ -1,0 +1,113 @@
+<div fxLayout fxLayout="column" fxLayoutAlign="start stretch" style="height: 100%;">
+  <md-card fxLayout fxLayout="column" fxLayoutAlign="start stretch" style="position: relative; min-height: 75px !important; height: 75px !important;  padding: 8px; margin: 8px; overflow-x: hidden;">
+    <button md-icon-button class="md-icon-button-sm" [disabled]="isListBusy" (click)="getCompanies(true)" style="position: absolute; right: 0px; top: 0px;">
+          <md-icon style="vertical-align: baseline;" [style.color]="isListBusy ? 'rgba(255, 255, 255, 0.85)' : 'lightgray'" class="mdi-14px mdi-rotate-45 mdi-bold" fontSet="mdi" fontIcon="mdi-autorenew"></md-icon>
+        </button>
+    <app-component-spinner [busy]="isListBusy" [small]="true"></app-component-spinner>
+    <md-card-content fxLayout="column" fxLayoutAlign="start stretch" style="width: 100%;">
+      <div fxLayout="row" style="margin-top: 10px;">
+        <md-form-field fxFlex>
+          <input type="text" mdInput (blur)="onBlur()" [(ngModel)]="selectedCompany" (ngModelChange)="updateAutocomplete($event)" [mdAutocomplete]="company"
+            placeholder="Company">
+        </md-form-field>
+        <md-autocomplete #company="mdAutocomplete" [displayWith]="displayFn">
+          <md-option (click)="getCompany()" *ngFor="let option of filteredCompanies" [value]="option">
+            <div fxLayout="row" fxLayoutAlign="space-between center" style="width: 100%;">
+              <span fxFlex="15" style="text-align: left;">{{ option.ticker }}</span>
+              <span fxFlex="85" style="text-align: left;">{{ option.name }}</span>
+            </div>
+          </md-option>
+        </md-autocomplete>
+        <md-form-field>
+          <input mdInput [disabled]="!selectedCompany?.name" [mdDatepicker]="start" placeholder="Start Date" [(ngModel)]="startDate">
+          <md-datepicker-toggle [disabled]="!selectedCompany?.name" mdSuffix [for]="start"></md-datepicker-toggle>
+          <md-datepicker touchUi="true" #start></md-datepicker>
+        </md-form-field>
+        <md-form-field>
+          <input mdInput [disabled]="!selectedCompany || !startDate" [mdDatepicker]="end" placeholder="End Date" [(ngModel)]="endDate"
+            (ngModelChange)="getData($event)">
+          <md-datepicker-toggle [disabled]="!selectedCompany || !startDate" mdSuffix [for]="end"></md-datepicker-toggle>
+          <md-datepicker touchUi="true" #end></md-datepicker>
+        </md-form-field>
+      </div>
+    </md-card-content>
+  </md-card>
+  <div fxFill fxLayout fxLayoutGap="10px" fxLayout="column" fxLayoutAlign="start stretch" style="overflow-y: auto; overflow-x: hidden; padding-bottom: 72px;">
+    <div fxLayout="column" fxLayoutAlign="start center" style="width: 100%; height: 100%;">
+      <div fxLayout="row" style="height: 100%; width: 100%;">
+        <md-card fxFlex="30" fxLayout fxLayoutGap="10px" fxLayout="column" fxLayoutAlign="start stretch" style="position: relative; height: 100%; padding: 8px; overflow-y: auto; margin: 0 4px 8px 8px; overflow-x: hidden;">
+          <button md-icon-button [disabled]="!selectedCompany?.name" (click)="getCompany(true)" style="position: absolute; left: 0; top: 0;">
+                <md-icon style="color: lightgray; vertical-align: baseline; line-height: 40px;" class="mdi-18px mdi-rotate-45 mdi-bold" fontSet="mdi" 
+                            fontIcon="mdi-autorenew"></md-icon>
+            </button>
+          <app-component-spinner [busy]="isSummaryBusy"></app-component-spinner>
+          <md-card-content fxLayout="column" fxLayoutAlign="start center" style="width: 100%; height: 100%;">
+            <div *ngIf="!selectedCompany?.name" style="height: 100%; margin-top: 50%; vertical-align: middle; text-align: center;">
+              <md-icon style="color: rgba(255, 255, 255, 0.7);" class="mdi-120px" fontSet="mdi" fontIcon="mdi-arrow-up-bold-circle-outline"></md-icon>
+              <div style="font-size: 24px; margin-top: 1em; color: rgba(255, 255, 255, 0.7);">Select a Stock</div>
+            </div>
+            <div *ngIf="selectedCompany?.name " style="text-align: center; color: rgba(255, 255, 255, 0.7);">
+              <!-- <md-icon style="color: rgba(255, 255, 255, 0.7);" class="mdi-120px" fontSet="mdi" fontIcon="mdi-{{stockDetails?.logo ? stockDetails.logo : 'twitter'}}"></md-icon>-->
+              <div style="font-size: 26px; margin-top: 8px;">{{companyDetails?.ticker}}</div>
+              <div style="font-size: 16px; margin: .5em 0 1em 0;">{{companyDetails?.name}}</div>
+              <div fxLayout="row" fxLayoutAlign="center center">
+                <span style="font-size: 13px;">{{companyDetails?.mailing_address}}</span>
+              </div>
+              <div fxLayout="row" fxLayoutAlign="center center" style="margin: .25em 0 1em 0;">
+                <a style="font-size: 14px; text-decoration: none; margin-right: 16px;" href="http://{{companyDetails?.company_url}}" target="_blank">{{companyDetails?.company_url}}</a>
+                <span style="font-size: 14px;">|</span>
+                <a style="font-size: 14px; text-decoration: none; margin-left: 16px;" href="tel:{{companyDetails?.business_phone_no}}">{{companyDetails?.business_phone_no}}</a>
+              </div>
+              <div fxLayout="row" fxLayoutAlign="center center">
+                <span style="font-size: 12px;">{{companyDetails?.short_description}}</span>
+              </div>
+              <div fxLayout="row" fxLayoutAlign="center center" style="margin: 1em 0;">
+                <div style="font-size: 32px; margin-right: 32px;">
+                  {{stockDetails?.dayPrice}}
+                </div>
+                <div fxLayout="column" style="font-size: 18px;">
+                  <div fxFlexAlign="start" style="width: 100%;">{{stockDetails?.dayChangeAmt}}
+                    <span fxFlex style="text-align: right; margin-left: 10px;"><md-icon class="mdi-18px success" fontSet="mdi" fontIcon="mdi-arrow-up"></md-icon></span>
+                  </div>
+                  <div fxFlexAlign="start" style="width: 100%;">{{stockDetails?.dayChangePct}}
+                    <span fxFlex style="text-align: right; margin-left: 10px;"><md-icon class="mdi-18px success" fontSet="mdi" fontIcon="mdi-arrow-up"></md-icon></span>
+                  </div>
+                </div>
+              </div>
+              <div style="font-size: 18px; margin: .5em 0">Market Cap - {{stockDetails?.marketCap}}</div>
+              <div style="font-size: 18px; margin: .5em 0">52 Week Range - {{stockDetails?.yearRange}}</div>
+
+              <div fxLayout="row" fxLayoutAlign="center center" style="margin: 1em 0 .25em 0;">
+                <div style="font-size: 18px; margin-right: 32px;">3M</div>
+                <div id="3m" class="sparkline"></div>
+              </div>
+              <div fxLayout="row" fxLayoutAlign="center center" style="margin: .25em 0;">
+                <div style="font-size: 18px; margin-right: 32px;">6M</div>
+                <div id="6m" class="sparkline"></div>
+              </div>
+              <div fxLayout="row" fxLayoutAlign="center center" style="margin: .25em 0;">
+                <div style="font-size: 18px; margin-right: 32px;">1Y</div>
+                <div id="1y" class="sparkline"></div>
+              </div>
+              <div fxLayout="row" fxLayoutAlign="center center" style="margin: .25em 0;">
+                <div style="font-size: 18px; margin-right: 32px;">2Y</div>
+                <div id="2y" class="sparkline"></div>
+              </div>
+            </div>
+          </md-card-content>
+        </md-card>
+        <md-card *ngIf="selectedCompany?.name" fxFlex="70" fxLayout fxLayoutGap="10px" fxLayout="column" fxLayoutAlign="center stretch"
+          style="position: relative; height: 100%; padding: 8px; overflow-y: auto; margin: 0 8px 8px 4px; overflow-x: hidden;">
+          <app-component-spinner [busy]="isChartBusy"></app-component-spinner>
+          <md-card-content fxLayout="column" fxLayoutAlign="center center" style="width: 100%;">
+            <div *ngIf="!startDate || !endDate" style="text-align: center;">
+              <md-icon *ngIf="!startDate || !endDate" class="mdi-120px" style="color: rgba(255, 255, 255, 0.7);" fontSet="mdi" fontIcon="mdi-arrow-up-bold-circle-outline"></md-icon>
+              <div *ngIf="!startDate || !endDate" style="font-size: 24px; margin-top: 1em; color: rgba(255, 255, 255, 0.7);">Select a Date Range</div>
+            </div>
+            <div id="stockChart" [style.height]="startDate && endDate ? '500px' : '0px'"></div>
+          </md-card-content>
+        </md-card>
+      </div>
+    </div>
+  </div>
+</div>

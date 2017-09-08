@@ -10,6 +10,7 @@
       "outDir": "dist",
       "assets": [
         "assets",
+        "web.config",
         "favicon.ico"
       ],
       "index": "index.html",
@@ -19,12 +20,17 @@
       "tsconfig": "tsconfig.json",
       "prefix": "app",
       "styles": [
-        "styles.css"
+        "styles.scss",
+        "theme.scss"
       ],
-      "scripts": [],
+      "scripts": [
+        "../node_modules/auth0-js/build/auth0.js",
+        "../node_modules/moment/min/moment.min.js"
+      ],
       "environmentSource": "environments/environment.ts",
       "environments": {
-        "dev": "environments/environment.ts",
+        "local": "environments/environment.local.ts",
+        "dev": "environments/environment.dev.ts",
         "prod": "environments/environment.prod.ts"
       }
     }
@@ -50,7 +56,7 @@
     }
   },
   "defaults": {
-    "styleExt": "css",
+    "styleExt": "scss",
     "component": {}
   }
 }

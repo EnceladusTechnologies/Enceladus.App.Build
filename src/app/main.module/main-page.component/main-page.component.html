@@ -1,0 +1,12 @@
+<md-toolbar class="nav-toolbar" color="accent">
+  Dashboard
+  <span fxFlex></span>
+  <button mdTooltip="Sign Out" mdTooltipClass="text-no-wrap" md-icon-button (click)="logout()">
+    <md-icon class="mdi-24px" fontSet="mdi" fontIcon="mdi-lock"></md-icon>
+  </button>
+</md-toolbar>
+<div fxLayout fxLayout="column" fxLayoutGap="8px" fxLayoutAlign="space-around center" style="height: 100%; padding-bottom: 72px;">
+  <div fxFill fxFlex="100" style="max-width: 700px;">
+    <router-outlet></router-outlet>
+  </div>
+</div>
