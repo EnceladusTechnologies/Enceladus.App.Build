@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { LoginService } from '../../login.module/login.service';
+import { AuthService } from "app/auth.service";
 @Component({
   selector: 'app-main-page',
   templateUrl: './main-page.component.html',
@@ -8,12 +8,12 @@ import { LoginService } from '../../login.module/login.service';
 export class MainPageComponent {
 
   constructor(
-    private _loginService: LoginService
+    private auth: AuthService
   ) {
     console.log('main page constructor');
   }
 
   public logout() {
-    this._loginService.logout();
+    this.auth.logout();
   }
 }

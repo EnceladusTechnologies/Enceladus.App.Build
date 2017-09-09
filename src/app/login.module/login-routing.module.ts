@@ -5,11 +5,11 @@ import { LoginComponent } from './login.component/login.component';
 import { LoginPageComponent } from './login-page.component/login-page.component';
 
 const loginRoutes: Routes = [
-    {
-        path: '',
-        redirectTo: '/login-page',
-        pathMatch: 'full'
-    },
+    // {
+    //     path: '',
+    //     redirectTo: '/login-page',
+    //     pathMatch: 'full'
+    // },
     {
         path: '',
         component: LoginPageComponent,

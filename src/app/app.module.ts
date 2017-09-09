@@ -10,9 +10,15 @@ import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { MainDataService } from './main.module/main-data.service';
 
 import 'hammerjs';
+
+import { AuthService } from "app/auth.service";
+import { CallbackComponent } from "app/callback.component/callback.component";
+
+
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    CallbackComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -22,6 +28,7 @@ import 'hammerjs';
     HttpModule,
     InMemoryWebApiModule.forRoot(MainDataService, { passThruUnknownUrl: true }),
   ],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuardService } from 'app/core.module/services/auth-guard.service';
+import { CallbackComponent } from "app/callback.component/callback.component";
 const routes: Routes = [
-    { path: 'login-page', loadChildren: './login.module/login.module#LoginModule' },
+    // { path: 'login-page', loadChildren: './login.module/login.module#LoginModule' },
     {
         path: '',
         loadChildren: './main.module/main.module#MainModule',
@@ -12,8 +13,8 @@ const routes: Routes = [
             title: 'Enceladus'
         }
     },
-    { path: '', redirectTo: '/login-page', pathMatch: 'full' },
-    { path: '**', redirectTo: '/login-page', pathMatch: 'full' },
+    { path: 'callback', component: CallbackComponent },
+    { path: '**', redirectTo: '' }
 ];
 
 @NgModule({

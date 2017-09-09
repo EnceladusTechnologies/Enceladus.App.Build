@@ -3,6 +3,9 @@ import { Router, Event, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { SnackBarService } from './core.module/services/snackbar.service';
 import { LoginService } from './login.module/login.service';
+import { AUTH_CONFIG } from './auth0-variables';
+import * as auth0 from 'auth0-js';
+import { AuthService } from "app/auth.service";
 
 @Component({
   selector: 'app-root',
@@ -16,9 +19,8 @@ export class AppComponent {
     private _router: Router,
     private _activatedRoute: ActivatedRoute,
     private _titleService: Title,
-    private _loginService: LoginService,
+    private auth: AuthService,
     private _snackBar: SnackBarService) {
-    this._loginService.handleAuthentication();
     this._router.events.subscribe(
       (event: Event) => {
         this.loadingRoute = true;
@@ -33,6 +35,7 @@ export class AppComponent {
           this._titleService.setTitle(this.pageTitle);
         }
       });
+    auth.handleAuthentication();
   }
 
 }
