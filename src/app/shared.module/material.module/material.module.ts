@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import {
     MdAutocompleteModule,
     MdButtonModule,
+    MdButtonToggleModule,
     MdCardModule,
     MdCheckboxModule,
     MdChipsModule,
@@ -31,6 +32,7 @@ import {
     imports: [
         MdAutocompleteModule,
         MdButtonModule,
+        MdButtonToggleModule,
         MdCardModule,
         MdCheckboxModule,
         MdChipsModule,
@@ -58,6 +60,7 @@ import {
     exports: [
         MdAutocompleteModule,
         MdButtonModule,
+        MdButtonToggleModule,
         MdCardModule,
         MdCheckboxModule,
         MdChipsModule,

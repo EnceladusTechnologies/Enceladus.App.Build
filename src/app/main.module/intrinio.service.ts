@@ -5,7 +5,8 @@ import {
     HttpGetResponse,
     Company,
     CompanyListItem,
-    PriceListItem
+    PriceListItem,
+    Frequency
 } from '../shared.module/models/intrinio-vm';
 import 'rxjs/add/operator/map';
 import { INTRINIO_CONFIG } from '../intrinio-variables';
@@ -18,7 +19,7 @@ export class IntrinioService {
     private _headers: Headers;
     private _baseUrl: string;
     private _opts: RequestOptionsArgs;
-
+    private _FrequencyEnum: any = Frequency;
     constructor(
         private _http: Http,
         private _config: ConfigurationService,
@@ -63,7 +64,7 @@ export class IntrinioService {
         }
     }
 
-    public getHistoricalPriceData(ticker: string, startDate: string, endDate: string, forceRefresh?: boolean): Observable<PriceListItem[]> {
+    public getHistoricalPriceData(ticker: string, startDate: string, endDate: string, frequency: Frequency, forceRefresh?: boolean): Observable<PriceListItem[]> {
         // const cacheKey = cacheKeys.applePrices;
         // if (!forceRefresh && this._cacheService.exists(cacheKey)) {
         //     return Observable.of(this._cacheService.get(cacheKey));
@@ -76,8 +77,8 @@ export class IntrinioService {
             })
             .catch(this.handleError);
             */
-
-        return this._http.get(`${this._baseUrl}/prices?identifier=${ticker}&start_date=${startDate}&end_date=${endDate}&page_size=5000`, this._opts)
+            let freq = this._FrequencyEnum[frequency];
+        return this._http.get(`${this._baseUrl}/prices?frequency=${freq}&identifier=${ticker}&start_date=${startDate}&end_date=${endDate}&page_size=5000`, this._opts)
             .map((resp: any) => {
                 const getResponse = <HttpGetResponse>resp.json();
                 // this._cacheService.set(cacheKey, <PriceListItem[]>getResponse.data, { maxAge: this._config.maxAge });

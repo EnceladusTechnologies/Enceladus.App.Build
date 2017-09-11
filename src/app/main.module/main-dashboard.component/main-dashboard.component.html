@@ -1,37 +1,54 @@
 <div fxLayout fxLayout="column" fxLayoutAlign="start stretch" style="height: 100%;">
-  <md-card fxLayout fxLayout="column" fxLayoutAlign="start stretch" style="position: relative; min-height: 75px !important; height: 75px !important;  padding: 8px; margin: 8px; overflow-x: hidden;">
+  <md-toolbar >
     <button md-icon-button class="md-icon-button-sm" [disabled]="isListBusy" (click)="getCompanies(true)" style="position: absolute; right: 0px; top: 0px;">
           <md-icon style="vertical-align: baseline;" [style.color]="isListBusy ? 'rgba(255, 255, 255, 0.85)' : 'lightgray'" class="mdi-14px mdi-rotate-45 mdi-bold" fontSet="mdi" fontIcon="mdi-autorenew"></md-icon>
         </button>
     <app-component-spinner [busy]="isListBusy" [small]="true"></app-component-spinner>
-    <md-card-content fxLayout="column" fxLayoutAlign="start stretch" style="width: 100%;">
-      <div fxLayout="row" style="margin-top: 10px;">
-        <md-form-field fxFlex>
-          <input type="text" mdInput (blur)="onBlur()" [(ngModel)]="selectedCompany" (ngModelChange)="updateAutocomplete($event)" [mdAutocomplete]="company"
-            placeholder="Company">
-        </md-form-field>
-        <md-autocomplete #company="mdAutocomplete" [displayWith]="displayFn">
-          <md-option (click)="getCompany()" *ngFor="let option of filteredCompanies" [value]="option">
-            <div fxLayout="row" fxLayoutAlign="space-between center" style="width: 100%;">
-              <span fxFlex="15" style="text-align: left;">{{ option.ticker }}</span>
-              <span fxFlex="85" style="text-align: left;">{{ option.name }}</span>
-            </div>
-          </md-option>
-        </md-autocomplete>
-        <md-form-field>
-          <input mdInput [disabled]="!selectedCompany?.name" [mdDatepicker]="start" placeholder="Start Date" [(ngModel)]="startDate">
-          <md-datepicker-toggle [disabled]="!selectedCompany?.name" mdSuffix [for]="start"></md-datepicker-toggle>
-          <md-datepicker touchUi="true" #start></md-datepicker>
-        </md-form-field>
-        <md-form-field>
-          <input mdInput [disabled]="!selectedCompany || !startDate" [mdDatepicker]="end" placeholder="End Date" [(ngModel)]="endDate"
-            (ngModelChange)="getData($event)">
-          <md-datepicker-toggle [disabled]="!selectedCompany || !startDate" mdSuffix [for]="end"></md-datepicker-toggle>
-          <md-datepicker touchUi="true" #end></md-datepicker>
-        </md-form-field>
-      </div>
-    </md-card-content>
-  </md-card>
+
+    <md-form-field fxFlex style="margin-top:12px;">
+      <input type="text" mdInput (blur)="onBlur()" [(ngModel)]="selectedCompany" (ngModelChange)="updateAutocomplete($event)" [mdAutocomplete]="company"
+        placeholder="Company">
+    </md-form-field>
+    <md-autocomplete style="margin-top:12px;" #company="mdAutocomplete" [displayWith]="displayFn">
+      <md-option (click)="getCompany()" *ngFor="let option of filteredCompanies" [value]="option">
+        <div fxLayout="row" fxLayoutAlign="space-between center" style="width: 100%;">
+          <span fxFlex="15" style="text-align: left;">{{ option.ticker }}</span>
+          <span fxFlex="85" style="text-align: left;">{{ option.name }}</span>
+        </div>
+      </md-option>
+    </md-autocomplete>
+    <md-button-toggle-group [(ngModel)]="selectedFrequency" [disabled]="!selectedCompany">
+      <md-button-toggle [value]="Frequency.daily" selected>
+        <span>Daily</span>
+      </md-button-toggle>
+      <md-button-toggle [value]="Frequency.weekly">
+        <span>Weekly</span>
+      </md-button-toggle>
+      <md-button-toggle [value]="Frequency.monthly">
+        <span>Monthly</span>
+      </md-button-toggle>
+      <md-button-toggle [value]="Frequency.quarterly">
+        <span>Quarterly</span>
+      </md-button-toggle>
+      <md-button-toggle [value]="Frequency.yearly">
+        <span>Yearly</span>
+      </md-button-toggle>
+    </md-button-toggle-group>
+    <md-form-field style="margin-top:12px;">
+      <input mdInput [disabled]="!selectedCompany?.name" [mdDatepicker]="start" placeholder="Start Date" [(ngModel)]="startDate">
+      <md-datepicker-toggle [disabled]="!selectedCompany?.name" mdSuffix [for]="start"></md-datepicker-toggle>
+      <md-datepicker touchUi="true" #start></md-datepicker>
+    </md-form-field>
+    <md-form-field style="margin-top:12px;">
+      <input mdInput [disabled]="!selectedCompany || !startDate" [mdDatepicker]="end" placeholder="End Date" [(ngModel)]="endDate"
+        (ngModelChange)="getData()">
+      <md-datepicker-toggle [disabled]="!selectedCompany || !startDate" mdSuffix [for]="end"></md-datepicker-toggle>
+      <md-datepicker touchUi="true" #end></md-datepicker>
+    </md-form-field>
+    <button md-icon-button (click)="getData()" [disabled]="!selectedCompany || !startDate || !endDate">
+          <md-icon class="mdi-14px" fontSet="mdi" fontIcon="mdi-autorenew"></md-icon>
+        </button>
+  </md-toolbar>
   <div fxFill fxLayout fxLayoutGap="10px" fxLayout="column" fxLayoutAlign="start stretch" style="overflow-y: auto; overflow-x: hidden; padding-bottom: 72px;">
     <div fxLayout="column" fxLayoutAlign="start center" style="width: 100%; height: 100%;">
       <div fxLayout="row" style="height: 100%; width: 100%;">

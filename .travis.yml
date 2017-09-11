@@ -1,0 +1,39 @@
+sudo: required
+dist: trusty
+language: node_js
+node_js:
+- '6.9.2'
+branches:
+  only:
+  - master
+  - qa
+  - dev
+addons: 
+notifications:
+  slack: boothbooks:AUeGr2oAPZbNoNbxWJnFFwLD
+apt:
+  sources:
+  - google-chrome
+  packages:
+  - google-chrome-stable
+  - google-chrome-beta
+before_install:
+- export CHROME_BIN=chromium-browser
+- export DISPLAY=:99.0
+- sh -e /etc/init.d/xvfb start
+- chmod +x push.sh
+before_script:
+- npm list -g @angular/cli --depth=0 || npm install -g @angular/cli
+- npm list -g karma --depth=0 || npm install -g karma
+- npm install
+- ng build --env=dev
+script:
+- node --max_old_space_size=4096 ./node_modules/karma/bin/karma start --single-run || exit 0
+after_success:
+- "./push.sh"
+# env:
+#  global:
+#   secure: gcIB3xZfzej77xaSMNH0Ta5mtBv/dhEpZoohXNghiiSJpgZpJJ278ANuPzSjkVCuZSJWk3i3J9700VqGJ1WYpTBAKgDkhg+pbfn1fVG/7dkltWRHX8Mqqm7EIa6nLiF00hD9E0Iv1DaRcbe9++wnVvrMyZg9WjJEUqv+XAG/CV0Rn0UPqduk3mrUdCf1OavqxhdTX54x0KtvPfETNbFbyiBBhPlJ4fZAFuTXIRduun2YqbVFCKx6pyFm0u6M0YWUTVFqV5+n2yiac/LoLCF+kRRCVRHvlHSYEXCSWnqsVF1DhsW8WUO9/QNCkC7MQWNoZNSUleDDZ1Ui2WSwnZn3AEY9WTWuo0MM8sIKjQLpxyJO7PSlFBjBHTrEe/xSL7s6sxVeiy66G+82iWq5AsTKVv4+YNJrX3FsDidtn2CNhne7Bzu3JCWGuDUPCgLTFmR+TuA1EBl28viL5x89ffV13sUDC5v8vCRoehgKDzY+J4HmQ5JY9oIgWA4s5QOdZsj5wp8cT/BtGy1kVVSEaL8nxQi6b9q6tKCbRoPYi58qN3mvixkCpIwgHbU4GtbpMEf0q5SwPF+gfqPpfoNznEGxm19LmpiDXtm4bdQMtdKI2Z2Ahy6sICzWyWNZOWTWb1rpdLcZ59gr16ga4hl5xUoHTqxoJ9nv6iKoX1FfmnD0IrA=
+notifications:
+  slack:
+    secure: F46G86md+9Y6YB2pvB6h03A+Q5+yRFdu1763iQ8XoO95CZ1+CKftSRmfNAROTZvF+x5jKyWoPqmvvLodAFqk9NguzbarqCBgxWneZ02+HQ7v9NXaLQhS+vPflECzpMhH79hQceu7OltJlw7wB9Kqh5icSImY3HnlQUA9epLskIhI8wgES40k6nd4WDWgmhC8BNeDAW3lCtDc9W9Uf0XIUGLrvXNb9y60NHtgzS3d2NK9icBCEDcfL8TAa5/Mi6bQMei3fe58T7xLBc/tMXnyHmgnVjmVmniHjYtRxaYXUW54rRYGeT6zeJlg6ox9sKPV57CJESrWgy9lSn/HnX95fq+yv6/fYYrgQP89dBUXQ/67AhL8+wz2+eh1tG+AFhKTr0rtXQKfcVxZTUv1VnUy5Wxi/FxfQA5TL4+XXoSNhNB95L/i8Y9LWE2Vy6wTpD2k/ZDhiIybrDKMvXo9lYfgCumz6SgBmDmvq83IdWIwE4g0ZmRuI/CAuo0O2oMBRwiOGtzapbhkpQcWDiTf8DFzDXhL5I8CL8nL/8crIDKQGzB79Q8SOrwjCnqkRQciHDrphEcUGADKIMcwAby/uh+N2lh9DMj0IN7KP1U8d3MmF1E4hrKoHQ3DKHRZH8yhzIjJY1+AjsTLm2tiQkSO6mwx77jTG0NYKp9NOXq/Utk31cM=

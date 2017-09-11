@@ -7,7 +7,8 @@ import {
 import {
   Company,
   CompanyListItem,
-  PriceListItem
+  PriceListItem,
+  Frequency
 } from '../../shared.module/models/intrinio-vm';
 
 import { SnackBarService } from '../../core.module/services/snackbar.service';
@@ -26,6 +27,8 @@ export class MainDashboardComponent implements OnInit {
   public startDate: Date;
   public endDate: Date;
 
+  public selectedFrequency: Frequency;
+  Frequency: any = Frequency;
   public stockData = new Array<StockDataViewModel>();
 
   public stockChart: any;
@@ -96,15 +99,16 @@ export class MainDashboardComponent implements OnInit {
   public getPriceData(forceRefresh?: boolean) {
     this.isChartBusy = true;
     this._intrinioService
-      .getHistoricalPriceData(this.selectedCompany.ticker, this.startDate.toISOString().slice(0, 10), this.endDate.toISOString().slice(0, 10), forceRefresh)
+      .getHistoricalPriceData(this.selectedCompany.ticker, this.startDate.toISOString().slice(0, 10), this.endDate.toISOString().slice(0, 10), this.selectedFrequency, forceRefresh)
       .subscribe(k => {
         setTimeout(() => {
-          this.companyPriceData = k.sort((a: PriceListItem,
-            b: PriceListItem) => {
+          this.companyPriceData = k.sort((a: PriceListItem, b: PriceListItem) => {
             if (a.date < b.date) {
               return -1;
             } else if (b.date < a.date) {
               return 1;
+            } else {
+              return 0;
             }
           });
           this.stockChart = AmCharts.makeChart('stockChart', {
@@ -319,13 +323,13 @@ export class MainDashboardComponent implements OnInit {
     });
   }
 
-  public getData(evt: any) {
+  public getData() {
     this.getPriceData();
-    this._mainService
-      .getStockData()
-      .then(data => {
-        this.stockData = data;
-      });
+    // this._mainService
+    //   .getStockData()
+    //   .then(data => {
+    //     this.stockData = data;
+    //   });
   }
 
   public updateAutocomplete(val: any) {

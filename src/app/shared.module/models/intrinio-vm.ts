@@ -90,3 +90,12 @@ export class Company {
     template: string;
     standardized_active: boolean;
 }
+
+export enum Frequency {
+    daily,
+    weekly,
+    monthly,
+    quarterly,
+    yearly
+
+}
