@@ -12,6 +12,6 @@ export const AUTH_CONFIG: AuthConfig = {
     CLIENT_ID: environment.auth0ClientId,
     CLIENT_DOMAIN: environment.auth0Domain,
     AUDIENCE: environment.auth0Audience,
-    REDIRECT: environment +  '/callback',
+    REDIRECT: environment.webServer +  '/callback',
     SCOPE: 'openid'
 };
