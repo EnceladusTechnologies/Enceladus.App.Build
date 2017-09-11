@@ -1,4 +1,5 @@
 export const cacheKeys = {
+    exchanges: ':exchanges',
 
     // companies
     companies: ':companies',

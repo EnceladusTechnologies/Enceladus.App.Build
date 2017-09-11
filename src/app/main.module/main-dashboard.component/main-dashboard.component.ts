@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import {
   StockSummaryViewModel,
   StockDataViewModel,
@@ -8,12 +8,15 @@ import {
   Company,
   CompanyListItem,
   PriceListItem,
-  Frequency
+  Frequency,
+  ExchangeListItem,
+  SecuritiesListItem
 } from '../../shared.module/models/intrinio-vm';
 
 import { SnackBarService } from '../../core.module/services/snackbar.service';
 import { MainService } from '../main.service';
 import { IntrinioService } from '../intrinio.service';
+import { FormControl, NgControl, NgModel } from '@angular/forms';
 declare var moment: any;
 declare var AmCharts: any;
 
@@ -23,14 +26,15 @@ declare var AmCharts: any;
   styleUrls: ['./main-dashboard.component.scss']
 })
 export class MainDashboardComponent implements OnInit {
-
-  public startDate: Date;
-  public endDate: Date;
+  @ViewChild('securityInput') securityInput: NgModel;
+  @ViewChild('exchangeInput') exchangeInput: NgModel;
+  public startDate: Date = new Date();
+  public endDate: Date = new Date();
 
   public selectedFrequency: Frequency;
-  Frequency: any = Frequency;
+  public Frequency: any = Frequency;
   public stockData = new Array<StockDataViewModel>();
-
+  private _doneTypingInterval = 1000;
   public stockChart: any;
 
   public threeM: any;
@@ -40,13 +44,18 @@ export class MainDashboardComponent implements OnInit {
 
   public stockDetails: StockDetailsViewModel;
 
-  public companies = new Array<CompanyListItem>();
-  public filteredCompanies = new Array<CompanyListItem>();
-  public selectedCompany = new CompanyListItem();
+  public exchanges = new Array<ExchangeListItem>();
+  public filteredExchanges = new Array<ExchangeListItem>();
+  public selectedExchange = new ExchangeListItem();
+
+  public securities = new Array<SecuritiesListItem>();
+  public filteredSecurities = new Array<SecuritiesListItem>();
+  public selectedSecurity = new SecuritiesListItem();
   public companyDetails = new Company();
   public companyPriceData = new Array<PriceListItem>();
 
-
+  isExchangeSearchBusy = false;
+  isSecuritySearchBusy = false;
   public isListBusy = false;
   public isSummaryBusy = false;
   public isChartBusy = false;
@@ -56,23 +65,63 @@ export class MainDashboardComponent implements OnInit {
     private _intrinioService: IntrinioService,
     private _snackBar: SnackBarService
   ) {
-    console.log('main dashboard constructor');
-
+    this.startDate.setDate(this.endDate.getDate() - 180);
+    this.selectedFrequency = this.Frequency.daily;
   }
 
   ngOnInit() {
-    this.getCompanies();
+    this.getExchanges(true);
+    this.exchangeInput.valueChanges
+      .subscribe((val: string) => {
+        this.updateExchangeAutocomplete(val);
+      });
+    this.securityInput.valueChanges.debounceTime(500)
+      .subscribe((val: string) => {
+        if (val.length > 1) {
+          this.isSecuritySearchBusy = true;
+          this._intrinioService.querySecurity(this.selectedExchange, val)
+            .subscribe(results => {
+              this.isSecuritySearchBusy = false;
+              return this.filteredSecurities = results;
+            }, err => {
+              this._snackBar.open('error', 'Error');
+              this.isSecuritySearchBusy = false;
+            });
+        }
+      });
   }
 
-
-  public getCompanies(forceRefresh?: boolean) {
+  public getExchanges(forceRefresh?: boolean) {
     this.isListBusy = true;
     this._intrinioService
-      .getCompanies('500', forceRefresh)
-      .subscribe(companies => {
+      .getExchanges(forceRefresh)
+      .subscribe(exchanges => {
         setTimeout(() => {
-          this.companies = companies;
-          this.filteredCompanies = companies;
+          this.exchanges = exchanges
+            .sort((a: ExchangeListItem, b: ExchangeListItem) => {
+              if (a.acronym > b.acronym) {
+                return 1;
+              } else if (a.acronym < b.acronym) {
+                return -1;
+              }
+            });
+          this.filteredExchanges = this.exchanges;
+          this.isListBusy = false;
+        }, 500);
+      }, err => {
+        this._snackBar.open('error', err, 'OK');
+        this.isListBusy = false;
+      });
+  }
+
+  public getSecurities(forceRefresh?: boolean) {
+    this.isListBusy = true;
+    this._intrinioService
+      .getSecurities(this.selectedExchange, '500', forceRefresh)
+      .subscribe(securities => {
+        setTimeout(() => {
+          this.securities = securities;
+          this.filteredSecurities = securities;
           this.isListBusy = false;
         }, 500);
       }, err => {
@@ -84,7 +133,7 @@ export class MainDashboardComponent implements OnInit {
   public getCompany(forceRefresh?: boolean) {
     this.getStock();
     this.isSummaryBusy = true;
-    this._intrinioService.getCompanyDetails(this.selectedCompany.ticker)
+    this._intrinioService.getCompanyDetails(this.selectedSecurity.ticker)
       .subscribe(k => {
         setTimeout(() => {
           this.companyDetails = k;
@@ -99,7 +148,7 @@ export class MainDashboardComponent implements OnInit {
   public getPriceData(forceRefresh?: boolean) {
     this.isChartBusy = true;
     this._intrinioService
-      .getHistoricalPriceData(this.selectedCompany.ticker, this.startDate.toISOString().slice(0, 10), this.endDate.toISOString().slice(0, 10), this.selectedFrequency, forceRefresh)
+      .getHistoricalPriceData(this.selectedSecurity.ticker, this.startDate.toISOString().slice(0, 10), this.endDate.toISOString().slice(0, 10), this.selectedFrequency, forceRefresh)
       .subscribe(k => {
         setTimeout(() => {
           this.companyPriceData = k.sort((a: PriceListItem, b: PriceListItem) => {
@@ -164,8 +213,8 @@ export class MainDashboardComponent implements OnInit {
 
   public getStock() {
     this.stockDetails = new StockDetailsViewModel(
-      this.selectedCompany.ticker,
-      this.selectedCompany.name,
+      this.selectedSecurity.ticker,
+      this.selectedSecurity.security_name,
       '',
       '$98.72',
       '+ 0.57%',
@@ -331,32 +380,44 @@ export class MainDashboardComponent implements OnInit {
     //     this.stockData = data;
     //   });
   }
-
-  public updateAutocomplete(val: any) {
+  public updateExchangeAutocomplete(val: any) {
     if (typeof val === 'string') {
-      this.filteredCompanies = val ? this.companies.filter(item => {
-        if (item.name && item.name.toLocaleLowerCase().indexOf(val.toLocaleLowerCase()) > -1) {
+      this.filteredExchanges = val ? this.exchanges.filter(item => {
+        if (item.symbol && item.symbol.toLocaleLowerCase().indexOf(val.toLocaleLowerCase()) > -1) {
           return true;
         }
-        if (item.ticker && item.ticker.toLocaleLowerCase().indexOf(val.toLocaleLowerCase()) > -1) {
+        if (item.institution_name && item.institution_name.toLocaleLowerCase().indexOf(val.toLocaleLowerCase()) > -1) {
           return true;
         }
         return false;
-      }) : this.companies;
+      }) : this.exchanges;
     } else {
-      this.filteredCompanies = this.companies;
+      this.filteredExchanges = this.exchanges;
     }
 
   }
-  public displayFn(item: any): string {
-    return item ? (item.name ? item.name : '') : '';
+
+  public exchangeDisplayFn(item: ExchangeListItem): string {
+    return item ? (item.institution_name ? item.institution_name : '') : '';
   }
-  public onBlur() {
-    if (!this.selectedCompany) {
-      this.selectedCompany = new CompanyListItem();
+  public securityDisplayFn(item: SecuritiesListItem): string {
+    return item ? (item.security_name ? item.security_name : '') : '';
+  }
+  public onExchangeBlur() {
+    if (!this.selectedExchange) {
+      this.selectedExchange = new ExchangeListItem();
     } else {
-      if (!this.selectedCompany.name) {
-        this.selectedCompany = new CompanyListItem();
+      if (!this.selectedExchange.institution_name) {
+        this.selectedExchange = new ExchangeListItem();
+      }
+    }
+  }
+  public onSecurityBlur() {
+    if (!this.selectedSecurity) {
+      this.selectedSecurity = new SecuritiesListItem();
+    } else {
+      if (!this.selectedSecurity.security_name) {
+        this.selectedSecurity = new SecuritiesListItem();
       }
     }
   }

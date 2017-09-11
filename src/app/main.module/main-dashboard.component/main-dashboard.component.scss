@@ -20,7 +20,19 @@
   height: 50px;
 }
 
+.spinner-prefix {
+  height: 20px;
+  width:20px;
+  transition: opacity 0.3s;
+}
 
+.hidden-spinner {
+  opacity: 0;
+}
+
+.show-spinner {
+  opacity: 1;
+}
 .amcharts-scrollbar-horizontal {
 
   background-color: purple !important;

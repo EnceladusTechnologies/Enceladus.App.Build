@@ -6,7 +6,9 @@ import {
     Company,
     CompanyListItem,
     PriceListItem,
-    Frequency
+    Frequency,
+    ExchangeListItem,
+    SecuritiesListItem
 } from '../shared.module/models/intrinio-vm';
 import 'rxjs/add/operator/map';
 import { INTRINIO_CONFIG } from '../intrinio-variables';
@@ -34,7 +36,22 @@ export class IntrinioService {
             headers: this._headers
         };
     }
-
+    public queryExchange(value: string): Observable<ExchangeListItem[]> {
+        return this._http.get(`${this._baseUrl}/stock_exchanges?query=${value}`, this._opts)
+            .map((resp: any) => {
+                const getResponse = <HttpGetResponse>resp.json();
+                return <ExchangeListItem[]>getResponse.data;
+            })
+            .catch(this.handleError);
+    }
+    public querySecurity(exch: ExchangeListItem, value: string): Observable<SecuritiesListItem[]> {
+        return this._http.get(`${this._baseUrl}/securities?exch_symbol=${exch.symbol}&query=${value}`, this._opts)
+            .map((resp: any) => {
+                const getResponse = <HttpGetResponse>resp.json();
+                return <SecuritiesListItem[]>getResponse.data;
+            })
+            .catch(this.handleError);
+    }
     public getCompanyDetails(ticker: string, forceRefresh?: boolean): Observable<Company> {
         const cacheKey = ticker + cacheKeys.companyDetails;
         if (!forceRefresh && this._cacheService.exists(cacheKey)) {
@@ -49,19 +66,66 @@ export class IntrinioService {
         }
     }
 
-    public getCompanies(numberOfCompanies: string, forceRefresh?: boolean): Observable<CompanyListItem[]> {
-        const cacheKey = cacheKeys.companies;
-        if (!forceRefresh && this._cacheService.exists(cacheKey)) {
-            return Observable.of(this._cacheService.get(cacheKey));
-        } else {
-            return this._http.get(`${this._baseUrl}/companies?page_size=${numberOfCompanies}`, this._opts)
-                .map((resp: any) => {
-                    const getResponse = <HttpGetResponse>resp.json();
-                    this._cacheService.set(cacheKey, <CompanyListItem[]>getResponse.data, { maxAge: this._config.maxAge });
-                    return <CompanyListItem[]>getResponse.data;
-                })
-                .catch(this.handleError);
-        }
+    public getExchanges(forceRefresh?: boolean): Observable<ExchangeListItem[]> {
+        // const cacheKey = cacheKeys.exchanges;
+        // if (!forceRefresh && this._cacheService.exists(cacheKey)) {
+        //     return Observable.of(this._cacheService.get(cacheKey));
+        // } else {
+
+        let exch = new Array<ExchangeListItem>();
+        let amx = new ExchangeListItem();
+        amx.acronym = 'NASDAQ';
+        amx.symbol = '^XNAS';
+        amx.institution_name = 'NASDAQ';
+        amx.mic = 'XNAS';
+        exch.push(amx);
+
+        let nyse = new ExchangeListItem();
+        nyse.acronym = 'NYSE';
+        nyse.symbol = '^XNYS';
+        nyse.institution_name = 'New York Stock Exchange, Inc.';
+        nyse.mic = 'XNYS';
+        exch.push(nyse);
+
+        let bat = new ExchangeListItem();
+        bat.acronym = 'BATS';
+        bat.mic = 'BATS';
+        bat.symbol = '^BATS';
+        bat.institution_name = 'Bats Z-Exchange';
+        exch.push(bat);
+
+        let otc = new ExchangeListItem();
+        otc.acronym = 'OTCBB';
+        otc.mic = 'XOTC';
+        otc.institution_name = 'OTCBB';
+        otc.symbol = '^XOTC';
+        exch.push(otc);
+
+        return Observable.of(exch);
+
+        // return this._http.get(`${this._baseUrl}/stock_exchanges`, this._opts)
+        //     .map((resp: any) => {
+        //         const getResponse = <HttpGetResponse>resp.json();
+        //         // this._cacheService.set(cacheKey, <ExchangeListItem[]>getResponse.data, { maxAge: this._config.maxAge });
+        //         return <ExchangeListItem[]>getResponse.data;
+        //     })
+        //     .catch(this.handleError);
+        // }
+    }
+
+    public getSecurities(exch: ExchangeListItem, numberOfSecurities: string, forceRefresh?: boolean): Observable<SecuritiesListItem[]> {
+        // const cacheKey = exch.acronym + cacheKeys.companies;
+        // if (!forceRefresh && this._cacheService.exists(cacheKey)) {
+        //     return Observable.of(this._cacheService.get(cacheKey));
+        // } else {
+        return this._http.get(`${this._baseUrl}/securities?exch_symbol=${exch.acronym}`, this._opts)
+            .map((resp: any) => {
+                const getResponse = <HttpGetResponse>resp.json();
+                // this._cacheService.set(cacheKey, <CompanyListItem[]>getResponse.data, { maxAge: this._config.maxAge });
+                return <SecuritiesListItem[]>getResponse.data;
+            })
+            .catch(this.handleError);
+        // }
     }
 
     public getHistoricalPriceData(ticker: string, startDate: string, endDate: string, frequency: Frequency, forceRefresh?: boolean): Observable<PriceListItem[]> {
@@ -77,7 +141,7 @@ export class IntrinioService {
             })
             .catch(this.handleError);
             */
-            let freq = this._FrequencyEnum[frequency];
+        let freq = this._FrequencyEnum[frequency];
         return this._http.get(`${this._baseUrl}/prices?frequency=${freq}&identifier=${ticker}&start_date=${startDate}&end_date=${endDate}&page_size=5000`, this._opts)
             .map((resp: any) => {
                 const getResponse = <HttpGetResponse>resp.json();

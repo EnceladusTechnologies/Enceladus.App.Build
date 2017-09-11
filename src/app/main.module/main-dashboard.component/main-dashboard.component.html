@@ -1,23 +1,37 @@
 <div fxLayout fxLayout="column" fxLayoutAlign="start stretch" style="height: 100%;">
-  <md-toolbar >
+  <md-toolbar>
     <button md-icon-button class="md-icon-button-sm" [disabled]="isListBusy" (click)="getCompanies(true)" style="position: absolute; right: 0px; top: 0px;">
           <md-icon style="vertical-align: baseline;" [style.color]="isListBusy ? 'rgba(255, 255, 255, 0.85)' : 'lightgray'" class="mdi-14px mdi-rotate-45 mdi-bold" fontSet="mdi" fontIcon="mdi-autorenew"></md-icon>
         </button>
     <app-component-spinner [busy]="isListBusy" [small]="true"></app-component-spinner>
-
     <md-form-field fxFlex style="margin-top:12px;">
-      <input type="text" mdInput (blur)="onBlur()" [(ngModel)]="selectedCompany" (ngModelChange)="updateAutocomplete($event)" [mdAutocomplete]="company"
-        placeholder="Company">
+      <md-spinner class="spinner-prefix" mdPrefix [class.hidden-spinner]="!isExchangeSearchBusy" [class.show-spinner]="isExchangeSearchBusy"></md-spinner>
+      <input type="text" mdInput #exchangeInput="ngModel" (blur)="onExchangeBlur()" [(ngModel)]="selectedExchange" [mdAutocomplete]="exchange"
+        placeholder="Exchange">
     </md-form-field>
-    <md-autocomplete style="margin-top:12px;" #company="mdAutocomplete" [displayWith]="displayFn">
-      <md-option (click)="getCompany()" *ngFor="let option of filteredCompanies" [value]="option">
+    <md-autocomplete style="margin-top:12px;" #exchange="mdAutocomplete" [displayWith]="exchangeDisplayFn">
+      <md-option *ngFor="let option of filteredExchanges" [value]="option">
         <div fxLayout="row" fxLayoutAlign="space-between center" style="width: 100%;">
-          <span fxFlex="15" style="text-align: left;">{{ option.ticker }}</span>
-          <span fxFlex="85" style="text-align: left;">{{ option.name }}</span>
+          <span fxFlex="20" style="text-align: left;">{{ option.acronym }}</span>
+          <span fxFlex="80" style="text-align: left;">{{ option.institution_name }}</span>
         </div>
       </md-option>
     </md-autocomplete>
-    <md-button-toggle-group [(ngModel)]="selectedFrequency" [disabled]="!selectedCompany">
+    <md-form-field fxFlex style="margin-top:12px;">
+      <md-spinner class="spinner-prefix" mdPrefix [class.hidden-spinner]="!isSecuritySearchBusy" [class.show-spinner]="isSecuritySearchBusy"></md-spinner>
+
+      <input type="text" #securityInput="ngModel" mdInput (blur)="onSecurityBlur()" [(ngModel)]="selectedSecurity" [mdAutocomplete]="security"
+        placeholder="Security" [disabled]="!selectedExchange.symbol">
+    </md-form-field>
+    <md-autocomplete style="margin-top:12px;" #security="mdAutocomplete" [displayWith]="securityDisplayFn">
+      <md-option (click)="getCompany()" *ngFor="let option of filteredSecurities" [value]="option">
+        <div fxLayout="row" fxLayoutAlign="space-between center" style="width: 100%;">
+          <span fxFlex="15" style="text-align: left;">{{ option.ticker }}</span>
+          <span fxFlex="85" style="text-align: left;">{{ option.security_name }}</span>
+        </div>
+      </md-option>
+    </md-autocomplete>
+    <md-button-toggle-group [(ngModel)]="selectedFrequency" >
       <md-button-toggle [value]="Frequency.daily" selected>
         <span>Daily</span>
       </md-button-toggle>
@@ -35,17 +49,17 @@
       </md-button-toggle>
     </md-button-toggle-group>
     <md-form-field style="margin-top:12px;">
-      <input mdInput [disabled]="!selectedCompany?.name" [mdDatepicker]="start" placeholder="Start Date" [(ngModel)]="startDate">
-      <md-datepicker-toggle [disabled]="!selectedCompany?.name" mdSuffix [for]="start"></md-datepicker-toggle>
+      <input mdInput [disabled]="!selectedSecurity.ticker" [mdDatepicker]="start" placeholder="Start Date" [(ngModel)]="startDate">
+      <md-datepicker-toggle [disabled]="!selectedSecurity.ticker " mdSuffix [for]="start"></md-datepicker-toggle>
       <md-datepicker touchUi="true" #start></md-datepicker>
     </md-form-field>
     <md-form-field style="margin-top:12px;">
-      <input mdInput [disabled]="!selectedCompany || !startDate" [mdDatepicker]="end" placeholder="End Date" [(ngModel)]="endDate"
+      <input mdInput [disabled]="!selectedSecurity.ticker || !startDate" [mdDatepicker]="end" placeholder="End Date" [(ngModel)]="endDate"
         (ngModelChange)="getData()">
-      <md-datepicker-toggle [disabled]="!selectedCompany || !startDate" mdSuffix [for]="end"></md-datepicker-toggle>
+      <md-datepicker-toggle [disabled]="!selectedSecurity.ticker || !startDate" mdSuffix [for]="end"></md-datepicker-toggle>
       <md-datepicker touchUi="true" #end></md-datepicker>
     </md-form-field>
-    <button md-icon-button (click)="getData()" [disabled]="!selectedCompany || !startDate || !endDate">
+    <button md-icon-button (click)="getData()" [disabled]="!selectedSecurity.ticker || !startDate || !endDate">
           <md-icon class="mdi-14px" fontSet="mdi" fontIcon="mdi-autorenew"></md-icon>
         </button>
   </md-toolbar>
@@ -53,17 +67,17 @@
     <div fxLayout="column" fxLayoutAlign="start center" style="width: 100%; height: 100%;">
       <div fxLayout="row" style="height: 100%; width: 100%;">
         <md-card fxFlex="30" fxLayout fxLayoutGap="10px" fxLayout="column" fxLayoutAlign="start stretch" style="position: relative; height: 100%; padding: 8px; overflow-y: auto; margin: 0 4px 8px 8px; overflow-x: hidden;">
-          <button md-icon-button [disabled]="!selectedCompany?.name" (click)="getCompany(true)" style="position: absolute; left: 0; top: 0;">
+          <button md-icon-button [disabled]="!selectedSecurity.ticker" (click)="getCompany(true)" style="position: absolute; left: 0; top: 0;">
                 <md-icon style="color: lightgray; vertical-align: baseline; line-height: 40px;" class="mdi-18px mdi-rotate-45 mdi-bold" fontSet="mdi" 
                             fontIcon="mdi-autorenew"></md-icon>
             </button>
           <app-component-spinner [busy]="isSummaryBusy"></app-component-spinner>
           <md-card-content fxLayout="column" fxLayoutAlign="start center" style="width: 100%; height: 100%;">
-            <div *ngIf="!selectedCompany?.name" style="height: 100%; margin-top: 50%; vertical-align: middle; text-align: center;">
+            <div *ngIf="!selectedSecurity.ticker" style="height: 100%; margin-top: 50%; vertical-align: middle; text-align: center;">
               <md-icon style="color: rgba(255, 255, 255, 0.7);" class="mdi-120px" fontSet="mdi" fontIcon="mdi-arrow-up-bold-circle-outline"></md-icon>
               <div style="font-size: 24px; margin-top: 1em; color: rgba(255, 255, 255, 0.7);">Select a Stock</div>
             </div>
-            <div *ngIf="selectedCompany?.name " style="text-align: center; color: rgba(255, 255, 255, 0.7);">
+            <div *ngIf="selectedSecurity.ticker " style="text-align: center; color: rgba(255, 255, 255, 0.7);">
               <div style="font-size: 26px; margin-top: 8px;">{{companyDetails?.ticker}}</div>
               <div style="font-size: 16px; margin: .5em 0 1em 0;">{{companyDetails?.name}}</div>
               <div fxLayout="row" fxLayoutAlign="center center">
@@ -112,7 +126,7 @@
             </div>
           </md-card-content>
         </md-card>
-        <md-card *ngIf="selectedCompany?.name" fxFlex="70" fxLayout fxLayoutGap="10px" fxLayout="column" fxLayoutAlign="center stretch"
+        <md-card *ngIf="selectedSecurity.ticker" fxFlex="70" fxLayout fxLayoutGap="10px" fxLayout="column" fxLayoutAlign="center stretch"
           style="position: relative; height: 100%; padding: 8px; overflow-y: auto; margin: 0 8px 8px 4px; overflow-x: hidden;">
           <app-component-spinner [busy]="isChartBusy"></app-component-spinner>
           <md-card-content fxLayout="column" fxLayoutAlign="center center" style="width: 100%;">

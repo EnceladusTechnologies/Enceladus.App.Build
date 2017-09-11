@@ -22,6 +22,7 @@ import {
     MdRippleModule,
     MdSelectModule,
     MdSlideToggleModule,
+    MdProgressSpinnerModule,
     MdSnackBarModule,
     MdTooltipModule,
     MdTabsModule,
@@ -55,6 +56,7 @@ import {
         MdSnackBarModule,
         MdTooltipModule,
         MdTabsModule,
+        MdProgressSpinnerModule,
         MdToolbarModule
     ],
     exports: [
@@ -83,6 +85,7 @@ import {
         MdSnackBarModule,
         MdTooltipModule,
         MdTabsModule,
+        MdProgressSpinnerModule,
         MdToolbarModule
     ]
 })
