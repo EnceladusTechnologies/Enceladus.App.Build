@@ -48,7 +48,7 @@ export class LoginService {
         //     }
         // });
     }
-    private _setSession(authResult) {
+    private _setSession(authResult: any) {
         const expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
         localStorage.setItem('access_token', authResult.accessToken);
         localStorage.setItem('id_token', authResult.idToken);

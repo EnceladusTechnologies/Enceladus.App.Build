@@ -1,6 +1,6 @@
 <div fxLayout fxLayout="column" fxLayoutAlign="start stretch" style="height: 100%;">
   <md-toolbar>
-    <button md-icon-button class="md-icon-button-sm" [disabled]="isListBusy" (click)="getCompanies(true)" style="position: absolute; right: 0px; top: 0px;">
+    <button md-icon-button class="md-icon-button-sm" [disabled]="isListBusy" (click)="getSecurities(true)" style="position: absolute; right: 0px; top: 0px;">
           <md-icon style="vertical-align: baseline;" [style.color]="isListBusy ? 'rgba(255, 255, 255, 0.85)' : 'lightgray'" class="mdi-14px mdi-rotate-45 mdi-bold" fontSet="mdi" fontIcon="mdi-autorenew"></md-icon>
         </button>
     <app-component-spinner [busy]="isListBusy" [small]="true"></app-component-spinner>

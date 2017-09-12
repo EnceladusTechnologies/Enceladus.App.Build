@@ -3,6 +3,7 @@
 # compiled output
 /dist
 /tmp
+/aot
 
 # dependencies
 /node_modules
@@ -35,6 +36,9 @@ testem.log
 # e2e
 /e2e/*.js
 /e2e/*.map
+
+**/*/*.js
+**/*/*.js.map
 
 #System Files
 .DS_Store

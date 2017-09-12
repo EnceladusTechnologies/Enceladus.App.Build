@@ -5,7 +5,7 @@ import { SnackBarService } from './core.module/services/snackbar.service';
 import { LoginService } from './login.module/login.service';
 import { AUTH_CONFIG } from './auth0-variables';
 import * as auth0 from 'auth0-js';
-import { AuthService } from "app/auth.service";
+import { AuthService } from "./auth.service";
 
 @Component({
   selector: 'app-root',
