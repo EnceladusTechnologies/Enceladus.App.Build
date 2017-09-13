@@ -26,7 +26,7 @@ before_script:
 - npm list -g @angular/cli --depth=0 || npm install -g @angular/cli
 - npm list -g karma --depth=0 || npm install -g karma
 - npm install
-- ng build --prod
+- node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng build --environment=dev --prod  --aot=true --output-hashing=all --sourcemaps=false --extract-css=true --named-chunks=false
 script:
 - node --max_old_space_size=4096 ./node_modules/karma/bin/karma start --single-run || exit 0
 after_success:
