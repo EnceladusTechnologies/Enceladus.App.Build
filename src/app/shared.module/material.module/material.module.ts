@@ -3,7 +3,6 @@ import {
     MdAutocompleteModule,
     MdButtonModule,
     MdButtonToggleModule,
-    MdCardModule,
     MdCheckboxModule,
     MdCoreModule,
     MdDatepickerModule,
@@ -16,6 +15,7 @@ import {
     MdSelectModule,
     MdProgressSpinnerModule,
     MdSnackBarModule,
+    MdTableModule,
     MdTooltipModule,
     MdToolbarModule
 } from '@angular/material';
@@ -25,7 +25,6 @@ import {
         MdAutocompleteModule,
         MdButtonModule,
         MdButtonToggleModule,
-        MdCardModule,
         MdCheckboxModule,
         MdCoreModule,
         MdDatepickerModule,
@@ -37,6 +36,7 @@ import {
         MdOptionModule,
         MdSelectModule,
         MdSnackBarModule,
+        MdTableModule,
         MdTooltipModule,
         MdProgressSpinnerModule,
         MdToolbarModule
@@ -45,7 +45,6 @@ import {
         MdAutocompleteModule,
         MdButtonModule,
         MdButtonToggleModule,
-        MdCardModule,
         MdCheckboxModule,
         MdCoreModule,
         MdDatepickerModule,
@@ -56,6 +55,7 @@ import {
         MdNativeDateModule,
         MdOptionModule,
         MdSelectModule,
+        MdTableModule,
         MdSnackBarModule,
         MdTooltipModule,
         MdProgressSpinnerModule,

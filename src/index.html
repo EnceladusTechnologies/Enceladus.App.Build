@@ -10,16 +10,28 @@
 
   <link href="https://cdn.materialdesignicons.com/1.9.32/css/materialdesignicons.min.css" rel="stylesheet" />
 
-  <link rel="icon" type="image/x-icon" href="src/favicon.ico">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
 
   <script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
   <script src="https://www.amcharts.com/lib/3/serial.js"></script>
   <script src="https://www.amcharts.com/lib/3/themes/dark.js"></script>
-
+  <script src="https://www.amcharts.com/lib/3/themes/black.js"></script>
+  <script src="https://www.amcharts.com/lib/3/amstock.js"></script>
   <script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
   <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
   <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
     crossorigin="anonymous"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/service-worker.js').then(function (registration) {
+        // Registration was successful
+        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+      }).catch(function (err) {
+        // registration failed :(
+        console.log('ServiceWorker registration failed: ', err);
+      });
+    }
+  </script>
 </head>
 
 <body>

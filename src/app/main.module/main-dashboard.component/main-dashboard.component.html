@@ -1,5 +1,5 @@
 <div fxLayout fxLayout="column" fxLayoutAlign="start stretch" style="height: 100%;">
-  <md-toolbar>
+  <!-- <md-toolbar>
     <button md-icon-button class="md-icon-button-sm" [disabled]="isListBusy" (click)="getSecurities(true)" style="position: absolute; right: 0px; top: 0px;">
           <md-icon style="vertical-align: baseline;" [style.color]="isListBusy ? 'rgba(255, 255, 255, 0.85)' : 'lightgray'" class="mdi-14px mdi-rotate-45 mdi-bold" fontSet="mdi" fontIcon="mdi-autorenew"></md-icon>
         </button>
@@ -31,7 +31,7 @@
         </div>
       </md-option>
     </md-autocomplete>
-    <md-button-toggle-group [(ngModel)]="selectedFrequency" >
+    <md-button-toggle-group [(ngModel)]="selectedFrequency">
       <md-button-toggle [value]="Frequency.daily" selected>
         <span>Daily</span>
       </md-button-toggle>
@@ -62,81 +62,39 @@
     <button md-icon-button (click)="getData()" [disabled]="!selectedSecurity.ticker || !startDate || !endDate">
           <md-icon class="mdi-14px" fontSet="mdi" fontIcon="mdi-autorenew"></md-icon>
         </button>
-  </md-toolbar>
-  <div fxFill fxLayout fxLayoutGap="10px" fxLayout="column" fxLayoutAlign="start stretch" style="overflow-y: auto; overflow-x: hidden; padding-bottom: 72px;">
-    <div fxLayout="column" fxLayoutAlign="start center" style="width: 100%; height: 100%;">
-      <div fxLayout="row" style="height: 100%; width: 100%;">
-        <md-card fxFlex="30" fxLayout fxLayoutGap="10px" fxLayout="column" fxLayoutAlign="start stretch" style="position: relative; height: 100%; padding: 8px; overflow-y: auto; margin: 0 4px 8px 8px; overflow-x: hidden;">
-          <button md-icon-button [disabled]="!selectedSecurity.ticker" (click)="getCompany(true)" style="position: absolute; left: 0; top: 0;">
-                <md-icon style="color: lightgray; vertical-align: baseline; line-height: 40px;" class="mdi-18px mdi-rotate-45 mdi-bold" fontSet="mdi" 
-                            fontIcon="mdi-autorenew"></md-icon>
-            </button>
-          <app-component-spinner [busy]="isSummaryBusy"></app-component-spinner>
-          <md-card-content fxLayout="column" fxLayoutAlign="start center" style="width: 100%; height: 100%;">
-            <div *ngIf="!selectedSecurity.ticker" style="height: 100%; margin-top: 50%; vertical-align: middle; text-align: center;">
-              <md-icon style="color: rgba(255, 255, 255, 0.7);" class="mdi-120px" fontSet="mdi" fontIcon="mdi-arrow-up-bold-circle-outline"></md-icon>
-              <div style="font-size: 24px; margin-top: 1em; color: rgba(255, 255, 255, 0.7);">Select a Stock</div>
-            </div>
-            <div *ngIf="selectedSecurity.ticker " style="text-align: center; color: rgba(255, 255, 255, 0.7);">
-              <div style="font-size: 26px; margin-top: 8px;">{{companyDetails?.ticker}}</div>
-              <div style="font-size: 16px; margin: .5em 0 1em 0;">{{companyDetails?.name}}</div>
-              <div fxLayout="row" fxLayoutAlign="center center">
-                <span style="font-size: 13px;">{{companyDetails?.mailing_address}}</span>
-              </div>
-              <div fxLayout="row" fxLayoutAlign="center center" style="margin: .25em 0 1em 0;">
-                <a style="font-size: 14px; text-decoration: none; margin-right: 16px;" href="http://{{companyDetails?.company_url}}" target="_blank">{{companyDetails?.company_url}}</a>
-                <span style="font-size: 14px;">|</span>
-                <a style="font-size: 14px; text-decoration: none; margin-left: 16px;" href="tel:{{companyDetails?.business_phone_no}}">{{companyDetails?.business_phone_no}}</a>
-              </div>
-              <div fxLayout="row" fxLayoutAlign="center center">
-                <span style="font-size: 12px;">{{companyDetails?.short_description}}</span>
-              </div>
-              <div fxLayout="row" fxLayoutAlign="center center" style="margin: 1em 0;">
-                <div style="font-size: 32px; margin-right: 32px;">
-                  {{stockDetails?.dayPrice}}
-                </div>
-                <div fxLayout="column" style="font-size: 18px;">
-                  <div fxFlexAlign="start" style="width: 100%;">{{stockDetails?.dayChangeAmt}}
-                    <span fxFlex style="text-align: right; margin-left: 10px;"><md-icon class="mdi-18px success" fontSet="mdi" fontIcon="mdi-arrow-up"></md-icon></span>
-                  </div>
-                  <div fxFlexAlign="start" style="width: 100%;">{{stockDetails?.dayChangePct}}
-                    <span fxFlex style="text-align: right; margin-left: 10px;"><md-icon class="mdi-18px success" fontSet="mdi" fontIcon="mdi-arrow-up"></md-icon></span>
-                  </div>
-                </div>
-              </div>
-              <div style="font-size: 18px; margin: .5em 0">Market Cap - {{stockDetails?.marketCap}}</div>
-              <div style="font-size: 18px; margin: .5em 0">52 Week Range - {{stockDetails?.yearRange}}</div>
-
-              <div fxLayout="row" fxLayoutAlign="center center" style="margin: 1em 0 .25em 0;">
-                <div style="font-size: 18px; margin-right: 32px;">3M</div>
-                <div id="3m" class="sparkline"></div>
-              </div>
-              <div fxLayout="row" fxLayoutAlign="center center" style="margin: .25em 0;">
-                <div style="font-size: 18px; margin-right: 32px;">6M</div>
-                <div id="6m" class="sparkline"></div>
-              </div>
-              <div fxLayout="row" fxLayoutAlign="center center" style="margin: .25em 0;">
-                <div style="font-size: 18px; margin-right: 32px;">1Y</div>
-                <div id="1y" class="sparkline"></div>
-              </div>
-              <div fxLayout="row" fxLayoutAlign="center center" style="margin: .25em 0;">
-                <div style="font-size: 18px; margin-right: 32px;">2Y</div>
-                <div id="2y" class="sparkline"></div>
-              </div>
-            </div>
-          </md-card-content>
-        </md-card>
-        <md-card *ngIf="selectedSecurity.ticker" fxFlex="70" fxLayout fxLayoutGap="10px" fxLayout="column" fxLayoutAlign="center stretch"
-          style="position: relative; height: 100%; padding: 8px; overflow-y: auto; margin: 0 8px 8px 4px; overflow-x: hidden;">
-          <app-component-spinner [busy]="isChartBusy"></app-component-spinner>
-          <md-card-content fxLayout="column" fxLayoutAlign="center center" style="width: 100%;">
-            <div *ngIf="!startDate || !endDate" style="text-align: center;">
-              <md-icon *ngIf="!startDate || !endDate" class="mdi-120px" style="color: rgba(255, 255, 255, 0.7);" fontSet="mdi" fontIcon="mdi-arrow-up-bold-circle-outline"></md-icon>
-              <div *ngIf="!startDate || !endDate" style="font-size: 24px; margin-top: 1em; color: rgba(255, 255, 255, 0.7);">Select a Date Range</div>
-            </div>
-            <div id="stockChart" [style.height]="startDate && endDate ? '500px' : '0px'"></div>
-          </md-card-content>
-        </md-card>
+  </md-toolbar> -->
+  <div fxLayout="row" fxLayoutAlign="start stretch" fxFlex>
+    <div fxFlex="25" fxLayout="column" fxLayoutAlign="start stretch" style="position: relative;">
+      <app-component-spinner [busy]="isSummaryBusy"></app-component-spinner>
+    </div>
+    <div fxFlex fxLayout="column" fxLayoutAlign="center stretch" style="position: relative;">
+      <app-component-spinner [busy]="isChartBusy"></app-component-spinner>
+      <div fxFlex="60" id="stockChart"></div>
+      <div fxFlex style="background-color:darkgrey">
+        <md-table #table [dataSource]="botsDataSource">
+          <ng-container mdColumnDef="name">
+            <md-header-cell *mdHeaderCellDef> Name </md-header-cell>
+            <md-cell *mdCellDef="let element"> {{element.name}} </md-cell>
+          </ng-container>
+          <ng-container mdColumnDef="author">
+            <md-header-cell *mdHeaderCellDef> Author </md-header-cell>
+            <md-cell *mdCellDef="let element"> {{element.author}} </md-cell>
+          </ng-container>
+          <ng-container mdColumnDef="modelInputs">
+            <md-header-cell *mdHeaderCellDef> Model Inputs </md-header-cell>
+            <md-cell *mdCellDef="let element"> {{element.modelInputs}} </md-cell>
+          </ng-container>
+          <ng-container mdColumnDef="run-simulation">
+            <md-header-cell *mdHeaderCellDef> </md-header-cell>
+            <md-cell *mdCellDef="let element">
+              <button md-icon-button (click)="runSimulation(element)"> 
+                  <md-icon style="color:darkgreen;" class="mdi-24px" fontSet="mdi" fontIcon="mdi-play-circle"></md-icon>
+              </button>
+            </md-cell>
+          </ng-container>
+          <md-header-row *mdHeaderRowDef="botsDisplayedColumns"></md-header-row>
+          <md-row *mdRowDef="let row; columns: botsDisplayedColumns;"></md-row>
+        </md-table>
       </div>
     </div>
   </div>

@@ -3,6 +3,7 @@ import { AUTH_CONFIG } from './auth0-variables';
 import { Router } from '@angular/router';
 import * as auth0 from 'auth0-js';
 import { Auth0DecodedHash } from 'auth0-js';
+import { cacheKeys } from 'app/app.constants';
 
 @Injectable()
 export class AuthService {
@@ -52,6 +53,7 @@ export class AuthService {
         localStorage.removeItem('access_token');
         localStorage.removeItem('id_token');
         localStorage.removeItem('expires_at');
+        localStorage.clear();
         // Go back to the home route
         this.login();
     }

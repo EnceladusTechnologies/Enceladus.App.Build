@@ -15,7 +15,7 @@ export class AuthHttpService {
         private _router: Router) {
         this._headers = new Headers();
         this._headers.append('Content-Type', 'application/json');
-        this._headers.append('Authorization', 'Bearer ' + localStorage.getItem(cacheKeys.id_token));
+        this._headers.append('Authorization', 'Bearer ' + localStorage.getItem('access_token'));
         this._baseUrl = `${environment.apiServer}`;
 
     }
@@ -44,7 +44,7 @@ export class AuthHttpService {
         if (token) {
             this._headers.set('Authorization', 'Bearer ' + token);
         } else {
-            this._headers.set('Authorization', 'Bearer ' + localStorage.getItem(cacheKeys.id_token));
+            this._headers.set('Authorization', 'Bearer ' + localStorage.getItem(cacheKeys.access_token));
         }
         return this._headers;
     }
