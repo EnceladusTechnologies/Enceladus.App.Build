@@ -20,6 +20,50 @@ export class BotListItemVM {
     modelInputs: string;
 }
 
+export class TradeBook {
+    id: string;
+    tradeEntries: TradeEntry[];
+    series: SeriesItem[];
+    tradingStats: TradingStats;
+}
+
+// https://docs.amcharts.com/3/javascriptstockchart/StockEvent
+export class TradeEntry {
+    backgroundAlpha: number;
+    backgroundColor: string;
+    borderAlpha: number;
+    borderColor: string;
+    color: string;    
+    date: Date;
+    description: string;
+    fontSize: number;
+    graph: string;
+    rollOverColor: string;
+    showAt: string; // open/close/low/high
+    showBullet: boolean;
+    showOnAxis: boolean;
+    text: string;
+    type: string; // flag, sign, pin, triangleUp, triangleDown, triangleLeft, triangleRight, text, arrowUp, arrowDown
+    url: string;
+    urlTarget: string;
+    value: number;
+}
+export class SeriesItem {
+    date: Date;
+    open: number;
+    high: number;
+    low: number;
+    close: number;
+    signal: number;
+    portfolioValue: number;
+    position: number;
+}
+
+export class TradingStats {
+    totalPnL: number;
+    averageProfitPerTrade: number;
+}
+
 
 export class ITradingModel {
     id: string;

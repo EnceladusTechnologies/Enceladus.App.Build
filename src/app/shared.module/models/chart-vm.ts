@@ -99,8 +99,8 @@ export class FieldMaps {
             toField: 'close'
         },
         {
-            fromField: 'volume',
-            toField: 'volume'
+            fromField: 'signal',
+            toField: 'signal'
         }
     ];
 }

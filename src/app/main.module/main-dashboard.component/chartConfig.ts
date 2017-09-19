@@ -42,9 +42,9 @@ export class ChartConfigs {
         },
         stockGraphs: [ChartConfigs.chartGraph]
     };
-    static volumeGraph: stockGraph =
+    static signalGraph: stockGraph =
     {
-        valueField: "volume",
+        valueField: "signal",
         // openField: "open",
         type: "column",
         showBalloon: true,
@@ -55,9 +55,9 @@ export class ChartConfigs {
         // negativeFillColors: "#db4c3c",
         useDataSetColors: true
     };
-    static volumnePanel: panel = {
+    static signalPanel: panel = {
 
-        title: "Volume",
+        title: "Signal",
         percentHeight: 20,
         marginTop: 1,
         columnWidth: 0.6,
@@ -73,7 +73,7 @@ export class ChartConfigs {
             labelText: "",
             periodValueTextRegular: "[[value.close]]"
         },
-        stockGraphs: [ChartConfigs.volumeGraph]
+        stockGraphs: [ChartConfigs.signalGraph]
     }
     static StockChart: ChartConfig = {
         type: "stock",
@@ -84,6 +84,6 @@ export class ChartConfigs {
         },
         chartCursorSettings: ChartConfigs.cursorSettings,
         dataSets: [],
-        panels: [ChartConfigs.stockPanel, ChartConfigs.volumnePanel]
+        panels: [ChartConfigs.stockPanel, ChartConfigs.signalPanel]
     }
 }

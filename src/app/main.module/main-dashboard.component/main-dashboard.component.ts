@@ -43,7 +43,7 @@ export class MainDashboardComponent implements OnInit {
   public Frequency: any = Frequency;
   public stockData = new Array<StockDataViewModel>();
   private _doneTypingInterval = 1000;
-  public stockChart: amChart;
+  public stockChart: any;
 
   public threeM: any;
   public sixM: any;
@@ -269,7 +269,7 @@ export class MainDashboardComponent implements OnInit {
         "high":  a1 += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 3),
         "low":  a1 += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 3),
         "close":  a1 += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 3),
-        "volume": Math.abs(b1 += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 15))
+        "signal": Math.abs(b1 += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 15))
       });
       this.chartData2.push({
         "date": newDate,
@@ -277,17 +277,17 @@ export class MainDashboardComponent implements OnInit {
         "high":  a2 += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 3),
         "low":  a2 += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 3),
         "close":  a2 += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 3),
-        "volume": Math.abs(b2 += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 15))
+        "signal": Math.abs(b2 += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 15))
       });
       this.chartData3.push({
         "date": newDate,
         "value": a3,
-        "volume": b3 + 1500
+        "signal": b3 + 1500
       });
       this.chartData4.push({
         "date": newDate,
         "value": a4,
-        "volume": b4 + 1500
+        "signal": b4 + 1500
       });
     }
   }
@@ -338,6 +338,23 @@ export class MainDashboardComponent implements OnInit {
     this._mainService.simulateBot(bot.id)
       .subscribe(k => {
         console.log(k);
+        k.series.forEach(item => {
+          item.date = new Date(item.date)
+        });
+        this.chartData1 = k.series;
+
+        // k.tradeEntries.forEach(item => {
+        //   item.graph = 'g1';
+        //   item.date = new Date(item.date)
+        // });
+        // this.chartData2 = k.tradeEntries;
+
+        this.stockChart.dataSets[0].title = bot.name;
+        this.stockChart.dataSets[0].dataProvider = k.series;
+        this.stockChart.validateData();
+        // })
+        
+        this.isChartBusy = false;
         this.isChartBusy = false;
       }, err => {
         this._snackBar.open('error', err, 'OK');
