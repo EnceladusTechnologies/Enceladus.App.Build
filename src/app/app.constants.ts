@@ -1,4 +1,6 @@
 export const cacheKeys = {
+    bots: ':bots',
+
     exchanges: ':exchanges',
 
     // companies

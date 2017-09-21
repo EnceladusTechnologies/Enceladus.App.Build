@@ -10,7 +10,6 @@ export class MainPageComponent {
   constructor(
     private auth: AuthService
   ) {
-    console.log('main page constructor');
   }
 
   public logout() {
