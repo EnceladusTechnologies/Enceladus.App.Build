@@ -12,10 +12,10 @@
    # git pull
 
 
-    git checkout qa
+    git checkout master
     git add --force dist
     git commit --message "Travis build: $TRAVIS_BUILD_NUMBER"
 
-    git push --force origin qa
+    git push --force origin master
     
  
