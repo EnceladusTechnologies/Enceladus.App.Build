@@ -1,5 +1,23 @@
 
-
+export class BotResultVM {
+    id: number;
+    modelName: string;
+    modelDescription: string;
+    modelAuthor: string;
+    modelInputs: string;
+    name: string;
+    description: string;
+    author: string;
+    targetTicker: string;
+    orderType: string;
+    orderAmount: number;
+    startingBank: number;
+    timeSlippageSecs: number;
+    priceSlippagePct: number;
+    commissionPenaltyPerTrade: number;
+    startDate: Date;
+    tradeBook: TradeBook;
+}
 export class BotVM {
     id: string;
     model: ITradingModel;
@@ -18,6 +36,50 @@ export class BotListItemVM {
     orderType: string;
     orderAmount: string;
     modelInputs: string;
+}
+
+export class TradeBook {
+    id: string;
+    tradeEntries: TradeEntry[];
+    series: SeriesItem[];
+    tradingStats: TradingStats;
+}
+
+// https://docs.amcharts.com/3/javascriptstockchart/StockEvent
+export class TradeEntry {
+    backgroundAlpha: number;
+    backgroundColor: string;
+    borderAlpha: number;
+    borderColor: string;
+    color: string;
+    date: Date;
+    description: string;
+    fontSize: number;
+    graph: string;
+    rollOverColor: string;
+    showAt: string; // open/close/low/high
+    showBullet: boolean;
+    showOnAxis: boolean;
+    text: string;
+    type: string; // flag, sign, pin, triangleUp, triangleDown, triangleLeft, triangleRight, text, arrowUp, arrowDown
+    url: string;
+    urlTarget: string;
+    value: number;
+}
+export class SeriesItem {
+    date: Date;
+    open: number;
+    high: number;
+    low: number;
+    close: number;
+    signal: number;
+    portfolioValue: number;
+    position: number;
+}
+
+export class TradingStats {
+    totalPnL: number;
+    averageProfitPerTrade: number;
 }
 
 

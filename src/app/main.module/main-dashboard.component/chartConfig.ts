@@ -3,6 +3,7 @@ import { ChartConfig, FieldMaps, stockGraph, panel, chartCursorSettings } from "
 export class ChartConfigs {
 
     static cursorSettings: chartCursorSettings = {
+        pan: true,
         valueBalloonsEnabled: true,
         fullWidth: true,
         cursorAlpha: 0.1,
@@ -19,48 +20,62 @@ export class ChartConfigs {
         highField: "high",
         lowField: "low",
         valueField: "close",
-        // lineColor: "#00ff00",
-        // fillColors: "#00ff00",
-        // negativeLineColor: "#db4c3c",
-        // negativeFillColors: "#db4c3c",
+        lineColor: "#4C9B3B",
+        fillColors: "#4C9B3B",
+        negativeLineColor: "#B4444F",
+        negativeFillColors: "#B4444F",
         fillAlphas: 1,
         comparedGraphLineThickness: 2,
-        columnWidth: 0.6,
+        columnWidth: 0.7,
         useDataSetColors: false,
         comparable: true,
         compareField: "close",
         showBalloon: true,
-        proCandlesticks: true
+        proCandlesticks: true,
+        balloonText: "[[close]]"
     };
 
     static stockPanel: panel = {
         title: "Value",
-        percentHeight: 80,
+        percentHeight: 60,
         stockLegend: {
             valueTextRegular: undefined,
             periodValueTextComparing: "[[percents.value.close]]%"
         },
         stockGraphs: [ChartConfigs.chartGraph]
     };
-    static volumeGraph: stockGraph =
+    static signalGraph: stockGraph =
     {
-        valueField: "volume",
-        // openField: "open",
+        valueField: "signal",
+        balloonText: "[[value]]",
         type: "column",
         showBalloon: true,
         fillAlphas: 1,
-        // lineColor: "#0000ff",
-        // fillColors: "#0000ff",
-        // negativeLineColor: "#db4c3c",
-        // negativeFillColors: "#db4c3c",
-        useDataSetColors: true
+        lineColor: "#438bae",
+        fillColors: "#438bae",
+        negativeLineColor: "#e6c423",
+        negativeFillColors: "#e6c423",
+        useDataSetColors: false
     };
-    static volumnePanel: panel = {
+    static positionGraph: stockGraph =
+    {
+        valueField: "position",
+        balloonText: "[[value]]",
+        type: "column",
+        showBalloon: true,
+        fillAlphas: 1,
+        lineColor: "#522d80",
+        fillColors: "#522d80",
+        negativeLineColor: "#f66733",
+        negativeFillColors: "#f66733",
+        useDataSetColors: false
+    };
+    static signalPanel: panel = {
 
-        title: "Volume",
+        title: "Signal",
         percentHeight: 20,
         marginTop: 1,
-        columnWidth: 0.6,
+        columnWidth: 0.8,
         showCategoryAxis: false,
         valueAxes: [
             {
@@ -73,17 +88,60 @@ export class ChartConfigs {
             labelText: "",
             periodValueTextRegular: "[[value.close]]"
         },
-        stockGraphs: [ChartConfigs.volumeGraph]
+        stockGraphs: [ChartConfigs.signalGraph]
+    }
+    static positionPanel: panel = {
+        title: "Position",
+        percentHeight: 20,
+        marginTop: 1,
+        columnWidth: 0.8,
+        showCategoryAxis: false,
+        valueAxes: [
+            {
+                usePrefixes: true
+            }
+        ],
+        stockLegend: {
+            markerType: "none",
+            markerSize: 0,
+            labelText: "",
+            periodValueTextRegular: "[[value.close]]"
+        },
+        stockGraphs: [ChartConfigs.positionGraph]
     }
     static StockChart: ChartConfig = {
         type: "stock",
         theme: "dark",
-        dataDateFormat: "YYYY-MM-DD",
+        dataDateFormat: "YYYY-MM-DD",        
         chartScrollbarSettings: {
-            graph: "g1"
+            graph: "g1",
+            graphType: "line",
+            usePeriod: "WW",
+            backgroundColor: "#333",
+            graphFillColor: "#777",
+            graphFillAlpha: 0.5,
+            gridColor: "#555",
+            gridAlpha: 1,
+            selectedBackgroundColor: "#444",
+            selectedGraphFillAlpha: 1
+        },
+        categoryAxisSettings: {
+            equalSpacing: true,
+            gridColor: "#555",
+            gridAlpha: 1
+        },
+        valueAxesSettings: {
+            gridColor: "#555",
+            gridAlpha: 1,
+            inside: true,
+            showLastLabel: true
         },
         chartCursorSettings: ChartConfigs.cursorSettings,
         dataSets: [],
-        panels: [ChartConfigs.stockPanel, ChartConfigs.volumnePanel]
+        panels: [
+            ChartConfigs.stockPanel,
+            ChartConfigs.positionPanel,
+            ChartConfigs.signalPanel
+        ]
     }
 }
