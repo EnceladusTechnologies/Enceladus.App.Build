@@ -13,12 +13,12 @@ export class ChartComponent {
   private textColors = ['#000000', '#0106fc', '#e8c322', '#efdede', '#d0500c', '#CD0D74', '#CC0000', '#00CC00', '#0000CC', '#DDDDDD', '#999999', '#333333', '#990000'];  
   @Input() private graphNo: any;  
   @Input() private graphType: any;  
-  @Input() private controlId: string;  
+  @Input() controlId: string;  
   @Input() private categoryField: string;  
   @Input() private title: Array<any> = [];  
   @Input() private valueField: Array<any> = [];  
   @Input() private newStackNo: any;  
-  @Input() private caption: string = ''  
+  @Input() caption: string = ''  
   @Input() private rotate: boolean  
   @Input("source") private _source: Array<any> = [];  
 
