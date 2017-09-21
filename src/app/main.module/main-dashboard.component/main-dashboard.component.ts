@@ -17,7 +17,7 @@ import { SnackBarService } from '../../core.module/services/snackbar.service';
 import { MainService } from '../main.service';
 import { IntrinioService } from '../intrinio.service';
 import { FormControl, NgControl, NgModel } from '@angular/forms';
-import { BotListItemVM } from 'app/shared.module/models/bots-vm';
+import { BotListItemVM, BotResultVM } from 'app/shared.module/models/bots-vm';
 import { DataSource } from "@angular/cdk/collections";
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
@@ -44,7 +44,7 @@ export class MainDashboardComponent implements OnInit {
   public stockData = new Array<StockDataViewModel>();
   private _doneTypingInterval = 1000;
   public stockChart: any;
-
+  public currentBot: BotResultVM;
   public threeM: any;
   public sixM: any;
   public oneY: any;
@@ -86,7 +86,6 @@ export class MainDashboardComponent implements OnInit {
     this.botsDisplayedColumns = ["name", "author", "modelInputs", "run-simulation"];
     this.botsDataSource = new BotListDataSource(this._mainService);
 
-    this.generateChartData();
     this.setupChart(ChartConfigs.StockChart);
 
   }
@@ -213,84 +212,27 @@ export class MainDashboardComponent implements OnInit {
   setupChart(config: ChartConfig) {
     this.stockChart = AmCharts.makeChart("stockChart", config);
     this.stockChart.dataSets.push({
-      title: "Data Set ONE",
+      title: "Target Stock Data",
       fieldMappings: FieldMaps.candleFieldMap,
       dataProvider: this.chartData1,
       categoryField: "date",
       compared: false
     });
     this.stockChart.dataSets.push({
-      title: "Data Set TWO",
-      fieldMappings: FieldMaps.candleFieldMap,
+      title: "Signal Data",
+      fieldMappings: [
+        {
+          fromField: 'portfolioValue',
+          toField: 'close'
+        }
+      ],
       dataProvider: this.chartData2,
       categoryField: "date",
       compared: true
     });
   }
 
-  generateChartData() {
-    var firstDate = new Date();
-    firstDate.setDate(firstDate.getDate() - 500);
-    firstDate.setHours(0, 0, 0, 0);
 
-    var a1 = 1500;
-    var b1 = 1500;
-
-    var a2 = 1700;
-    var b2 = 1700;
-    var c2 = 1700;
-    var d2 = 1700;
-    var e2 = 1700;
-
-    var a3 = 1600;
-    var b3 = 1600;
-    var a4 = 1400;
-    var b4 = 1400;
-
-    for (var i = 0; i < 500; i++) {
-      var newDate = new Date(firstDate);
-      newDate.setDate(newDate.getDate() + i);
-
-      a1 += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 3);
-      b1 += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 10);
-
-      a2 += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 10);
-      b2 += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 10);
-
-      a3 += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 10);
-      b3 += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 10);
-
-      a4 += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 10);
-      b4 += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 10);
-
-      this.chartData1.push({
-        "date": newDate,
-        "open":  a1 += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 3),
-        "high":  a1 += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 3),
-        "low":  a1 += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 3),
-        "close":  a1 += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 3),
-        "signal": Math.abs(b1 += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 15))
-      });
-      this.chartData2.push({
-        "date": newDate,
-        "open":  a2 += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 3),
-        "high":  a2 += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 3),
-        "low":  a2 += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 3),
-        "close":  a2 += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 3),
-        "signal": Math.abs(b2 += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 15))
-      });
-      this.chartData3.push({
-        "date": newDate,
-        "value": a3,
-        "signal": b3 + 1500
-      });
-      this.chartData4.push({
-        "date": newDate,
-        "value": a4,
-        "signal": b4 + 1500
-      });
-    }
-  }
   public updateExchangeAutocomplete(val: any) {
     if (typeof val === 'string') {
       this.filteredExchanges = val ? this.exchanges.filter(item => {
@@ -337,24 +279,30 @@ export class MainDashboardComponent implements OnInit {
     this.isChartBusy = true;
     this._mainService.simulateBot(bot.id)
       .subscribe(k => {
-        console.log(k);
-        k.series.forEach(item => {
+        
+        k.tradeBook.series.forEach(item => {
           item.date = new Date(item.date)
         });
-        this.chartData1 = k.series;
+        this.chartData1 = k.tradeBook.series;
 
-        // k.tradeEntries.forEach(item => {
-        //   item.graph = 'g1';
-        //   item.date = new Date(item.date)
-        // });
-        // this.chartData2 = k.tradeEntries;
+        k.tradeBook.tradeEntries.forEach(item => {
+          item.graph = 'g1';
+          item.date = new Date(item.date)
+        });
+        console.log(k);
+        this.chartData2 = k.tradeBook.tradeEntries;
 
-        this.stockChart.dataSets[0].title = bot.name;
-        this.stockChart.dataSets[0].dataProvider = k.series;
+        this.stockChart.dataSets[0].title = k.targetTicker;
+        this.stockChart.dataSets[0].dataProvider = k.tradeBook.series;
+        this.stockChart.dataSets[0].stockEvents = k.tradeBook.tradeEntries;
+
+        this.stockChart.dataSets[1].title = k.name;
+        this.stockChart.dataSets[1].dataProvider = k.tradeBook.series;
+
+
         this.stockChart.validateData();
-        // })
         
-        this.isChartBusy = false;
+        this.currentBot = k;
         this.isChartBusy = false;
       }, err => {
         this._snackBar.open('error', err, 'OK');

@@ -1,5 +1,23 @@
 
-
+export class BotResultVM {
+    id: number;
+    modelName: string;
+    modelDescription: string;
+    modelAuthor: string;
+    modelInputs: string;
+    name: string;
+    description: string;
+    author: string;
+    targetTicker: string;
+    orderType: string;
+    orderAmount: number;
+    startingBank: number;
+    timeSlippageSecs: number;
+    priceSlippagePct: number;
+    commissionPenaltyPerTrade: number;
+    startDate: Date;
+    tradeBook: TradeBook;
+}
 export class BotVM {
     id: string;
     model: ITradingModel;
@@ -33,7 +51,7 @@ export class TradeEntry {
     backgroundColor: string;
     borderAlpha: number;
     borderColor: string;
-    color: string;    
+    color: string;
     date: Date;
     description: string;
     fontSize: number;

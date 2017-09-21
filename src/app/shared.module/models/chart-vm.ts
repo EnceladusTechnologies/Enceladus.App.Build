@@ -9,10 +9,13 @@ export class ChartConfig {
     dataSets: dataSet[];
     dataDateFormat: string;
     chartScrollbarSettings: chartScrollbarSetting;
+    categoryAxisSettings?: any;
+    valueAxesSettings?: any;
     chartCursorSettings: chartCursorSettings;
     panels: panel[];
 }
 export class chartCursorSettings {
+    pan: boolean;
     valueBalloonsEnabled: boolean;
     fullWidth: boolean;
     cursorAlpha: number;
@@ -22,6 +25,15 @@ export class chartCursorSettings {
 }
 export class chartScrollbarSetting {
     graph: string;
+    graphType?: string;
+    usePeriod?: string;
+    backgroundColor?: string;
+    graphFillColor?: string;
+    graphFillAlpha?: number;
+    gridColor?: string;
+    gridAlpha?: number;
+    selectedBackgroundColor?:string;
+    selectedGraphFillAlpha?:number;
 }
 export class dataSet {
     title: string;
@@ -69,6 +81,7 @@ export class stockGraph {
     compareField?: string;
     showBalloon?: boolean;
     proCandlesticks?: boolean;
+    balloonText: string;
 }
 
 export class stockLegend {
@@ -101,6 +114,10 @@ export class FieldMaps {
         {
             fromField: 'signal',
             toField: 'signal'
+        },
+        {
+            fromField: 'position',
+            toField: 'position'
         }
     ];
 }

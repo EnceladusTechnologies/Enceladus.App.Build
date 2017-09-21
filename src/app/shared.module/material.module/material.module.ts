@@ -16,6 +16,7 @@ import {
     MdProgressSpinnerModule,
     MdSnackBarModule,
     MdTableModule,
+    MdCardModule,
     MdTooltipModule,
     MdToolbarModule
 } from '@angular/material';
@@ -35,6 +36,7 @@ import {
         MdNativeDateModule,
         MdOptionModule,
         MdSelectModule,
+        MdCardModule,
         MdSnackBarModule,
         MdTableModule,
         MdTooltipModule,
@@ -54,6 +56,7 @@ import {
         MdProgressBarModule,
         MdNativeDateModule,
         MdOptionModule,
+        MdCardModule,
         MdSelectModule,
         MdTableModule,
         MdSnackBarModule,

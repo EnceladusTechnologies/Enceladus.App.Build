@@ -11,7 +11,7 @@ import { ConfigurationService } from 'app/core.module/services/configuration.ser
 import { CacheService } from 'ng2-cache/ng2-cache';
 import { cacheKeys } from 'app/app.constants';
 import { Observable } from 'rxjs';
-import { BotListItemVM, TradeBook } from 'app/shared.module/models/bots-vm';
+import { BotListItemVM, TradeBook, BotResultVM } from 'app/shared.module/models/bots-vm';
 
 @Injectable()
 export class MainService {
@@ -38,7 +38,7 @@ export class MainService {
                 .catch(this._authHttp.handleError);
         // }
     }
-    public simulateBot(botId: string, forceRefresh?: boolean): Observable<TradeBook> {
+    public simulateBot(botId: string, forceRefresh?: boolean): Observable<BotResultVM> {
 
             return this._authHttp.get(`bots/${botId}/simulate`)
                 .map((resp: any) => {
