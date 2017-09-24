@@ -46,11 +46,21 @@ export class SimulationDashboardComponent implements OnInit, OnDestroy {
 
   }
   ngOnDestroy() {
-    this.stockChart.clear();
+    // this.stockChart.dataSets[0].dataProvider = [];
+    // this.stockChart.dataSets.splice();
+    // this.stockChart.validateData();
+
   }
 
   setupChart(config: ChartConfig) {
+
     this.stockChart = AmCharts.makeChart("stockChart", config);
+    if (AmCharts.enceladus_initialized) {
+      if (AmCharts.currentBot) {
+        this.currentBot = AmCharts.currentBot;
+      }
+      return;
+    }
     this.stockChart.dataSets.push({
       title: "Target Stock Data",
       fieldMappings: FieldMaps.candleFieldMap,
@@ -70,6 +80,8 @@ export class SimulationDashboardComponent implements OnInit, OnDestroy {
       categoryField: "date",
       compared: true
     });
+    AmCharts['enceladus_initialized'] = true;
+    console.log('post initial', AmCharts.charts);
   }
 
 
@@ -98,6 +110,7 @@ export class SimulationDashboardComponent implements OnInit, OnDestroy {
         this.stockChart.dataSets[1].dataProvider = k.tradeBook.series;
         this.stockChart.validateData();
 
+        AmCharts.currentBot = k;
         this.currentBot = k;
         this.isBusy = false;
       }, err => {

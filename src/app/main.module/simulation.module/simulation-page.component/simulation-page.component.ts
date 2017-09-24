@@ -8,7 +8,6 @@ import { Component, OnInit } from '@angular/core';
 export class SimulationPageComponent implements OnInit {
 
   constructor() {
-    console.log('simulation component constructor');
 
    }
 

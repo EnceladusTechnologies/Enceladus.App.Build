@@ -18,22 +18,18 @@ const mainRoutes: Routes = [
             {
                 path: 'simulation-page',
                 loadChildren: './simulation.module/simulation.module#SimulationModule',
-                data: {
-                    menuItem: 'Simulation',
-                    title: 'Simulation Page'
-                }
             },
             {
                 path: 'model-page',
                 loadChildren: './model.module/model.module#ModelModule',
-                data: {
-                    menuItem: 'Simulation',
-                    title: 'Simulation Page'
-                }
+            },
+            {
+                path: 'bot-strategy-page',
+                loadChildren: './strategy.module/strategy.module#StrategyModule',
             },
         ]
     },
-    
+
 ];
 
 @NgModule({

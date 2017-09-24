@@ -9,7 +9,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "precache": "sw-precache --root=dist --verbose"
+    "precache": "sw-precache --root=dist --verbose",
+    "build-aot": "node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng build --environment=prod --prod  --aot=true --output-hashing=all --sourcemaps=false --extract-css=true --named-chunks=false"
   },
   "private": true,
   "dependencies": {
