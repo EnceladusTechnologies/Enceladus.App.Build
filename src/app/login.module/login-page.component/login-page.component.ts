@@ -15,7 +15,7 @@ export class LoginPageComponent implements OnInit {
     private _router: Router,
     private _loginService: LoginService) {
     if (this._loginService.isAuthenticated()) {
-      this._router.navigate(['dashboard']);
+      this._router.navigate(['simulation-page']);
     }
   }
 

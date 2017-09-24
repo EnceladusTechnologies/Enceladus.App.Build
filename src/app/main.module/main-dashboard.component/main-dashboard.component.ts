@@ -22,7 +22,7 @@ import { DataSource } from "@angular/cdk/collections";
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import { FieldMaps, ChartConfig, amChart } from 'app/shared.module/models/chart-vm';
-import { ChartConfigs } from 'app/main.module/main-dashboard.component/chartConfig';
+import { ChartConfigs } from '../simulation.module/simulation-dashboard.component/chartConfig';
 
 
 declare var moment: any;

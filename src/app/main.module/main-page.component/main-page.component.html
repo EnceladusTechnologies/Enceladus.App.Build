@@ -1,12 +1,54 @@
 <md-toolbar class="nav-toolbar" color="accent">
-  Dashboard
-  <span fxFlex></span>
-  <button mdTooltip="Sign Out" mdTooltipClass="text-no-wrap" md-icon-button (click)="logout()">
+    <button md-mini-fab (click)="sidenav.toggle()">
+          <md-icon fontSet="mdi" class="mdi-18px" fontIcon="mdi-menu"></md-icon>
+        </button>
+    <span fxFlex></span>
+    <button mdTooltip="Sign Out" mdTooltipClass="text-no-wrap" md-icon-button (click)="logout()">
     <md-icon class="mdi-24px" fontSet="mdi" fontIcon="mdi-lock"></md-icon>
   </button>
-</md-toolbar>
-<div fxLayout fxLayout="column" fxLayoutGap="8px" fxLayoutAlign="space-around center" style="height: 100%; padding-bottom: 72px;">
-  <div fxFill fxFlex="100" style="max-width: 700px;">
+  </md-toolbar>
+<md-sidenav-container style="height: 100%">
+  <md-sidenav #sidenav>
+    <md-toolbar id="no-print" class="left-side-nav-header">
+      <div class="profile-side-list-container">
+        <div class="profile-avatar">
+          <img src="../../assets/EnceladusLogo.png" />
+        </div>
+        <span class="profile-name">Enceladus Technologies</span>
+      </div>
+    </md-toolbar>
+    <md-nav-list class="nav-list">
+      <div class="menu-item" (click)="sidenav.toggle()">
+        <a class="side-menu-link" [routerLink]="['/simulation-page']" [class.selected]="selectedRoute.includes('simulation')">
+          <div>
+            <md-icon fontSet="mdi" class="mdi-18px" fontIcon="mdi-chart-scatterplot-hexbin"></md-icon>
+            <span>Simulations</span>
+          </div>
+        </a>
+      </div>
+      <div class="menu-item" (click)="sidenav.toggle()">
+        <a class="side-menu-link" [routerLink]="['/model-page']" [class.selected]="selectedRoute.includes('model')">
+          <div>
+            <md-icon fontSet="mdi" class="mdi-18px" fontIcon="mdi-signal"></md-icon>
+            <span>Models</span>
+          </div>
+        </a>
+      </div>
+      <div class="menu-item" (click)="sidenav.toggle()">
+        <a class="side-menu-link" [routerLink]="['/strategy-page']" routerLinkActive="selected">
+          <div>
+            <md-icon fontSet="mdi" class="mdi-24px" fontIcon="mdi-robot"></md-icon>
+            <span>Bot Strategies</span>
+          </div>
+        </a>
+      </div>
+    </md-nav-list>
+    <div class="copyright">
+      © 2017 Enceladus Technologies LLC. All rights reserved.
+    </div>
+  </md-sidenav>
+
+  <div style="height: 100%;">
     <router-outlet></router-outlet>
   </div>
-</div>
+</md-sidenav-container>

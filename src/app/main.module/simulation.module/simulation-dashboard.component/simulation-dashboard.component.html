@@ -1,0 +1,65 @@
+<div fxLayout="row" fxLayoutAlign="start stretch" style="height: 100%">
+  <app-component-spinner [busy]="isChartBusy"></app-component-spinner>
+  <div fxFlex="25">
+    <md-card>
+      <md-card-header>
+        <md-icon md-card-avatar class="mdi-45px" fontSet="mdi" fontIcon="mdi-robot"></md-icon>
+        <md-card-title>{{currentBot?.name}}</md-card-title>
+        <md-card-subtitle>{{currentBot?.description}}</md-card-subtitle>
+      </md-card-header>
+      <md-card-content fxLayout="column" fxLayoutAlign="start stretch" *ngIf="!!currentBot" style="color: white;padding: 10px;">
+        <span><strong>Author: </strong><em>{{currentBot?.Author}}</em></span>
+        <span><strong>Start Date: </strong><em>{{currentBot?.startDate | date}}</em></span>
+      </md-card-content>
+    </md-card>
+    <md-card>
+      <md-card-header>
+        <md-icon md-card-avatar class="mdi-45px" fontSet="mdi" fontIcon="mdi-signal"></md-icon>
+        <md-card-title>{{currentBot?.modelName}}</md-card-title>
+        <md-card-subtitle>{{currentBot?.modelDescription}}</md-card-subtitle>
+      </md-card-header>
+      <md-card-content fxLayout="column" fxLayoutAlign="start stretch" *ngIf="!!currentBot" style="color: white;padding: 10px;">
+        <span><strong>Author: </strong><em>{{currentBot?.modelAuthor}}</em></span>
+      </md-card-content>
+    </md-card>
+    <md-card>
+      <md-card-header>
+        <md-icon md-card-avatar class="mdi-45px" fontSet="mdi" fontIcon="mdi-beta"></md-icon>
+        <md-card-title>Statistics</md-card-title>
+      </md-card-header>
+      <md-card-content fxLayout="column" fxLayoutAlign="start stretch" *ngIf="!!currentBot" style="color: white;padding: 10px;">
+        <span><strong>Profit &amp; Loss: </strong><em>{{currentBot?.tradeBook.tradingStats.totalPnL/100 | currency:'USD':true:'1.2-2'}}</em></span>
+        <span><strong>Win Pct: </strong><em>{{currentBot?.tradeBook.tradingStats.winPct}}%</em></span>
+      </md-card-content>
+    </md-card>
+  </div>
+  <div fxFlex fxLayout="column" fxLayoutAlign="start stretch">
+    <div fxFlex="70" id="stockChart"></div>
+    <div fxFlex style="background-color:darkgrey">
+      <md-table #table [dataSource]="botsDataSource">
+        <ng-container mdColumnDef="name">
+          <md-header-cell *mdHeaderCellDef> Name </md-header-cell>
+          <md-cell *mdCellDef="let element"> {{element.name}} </md-cell>
+        </ng-container>
+        <ng-container mdColumnDef="author">
+          <md-header-cell *mdHeaderCellDef> Author </md-header-cell>
+          <md-cell *mdCellDef="let element"> {{element.author}} </md-cell>
+        </ng-container>
+        <ng-container mdColumnDef="modelInputs">
+          <md-header-cell *mdHeaderCellDef> Target </md-header-cell>
+          <md-cell *mdCellDef="let element"> {{element.modelInputs}} </md-cell>
+        </ng-container>
+        <ng-container mdColumnDef="run-simulation">
+          <md-header-cell *mdHeaderCellDef> </md-header-cell>
+          <md-cell *mdCellDef="let element">
+            <button md-icon-button (click)="runSimulation(element)"> 
+                  <md-icon  class="mdi-24px" fontSet="mdi" fontIcon="mdi-play-circle"></md-icon>
+              </button>
+          </md-cell>
+        </ng-container>
+        <md-header-row *mdHeaderRowDef="botsDisplayedColumns"></md-header-row>
+        <md-row *mdRowDef="let row; columns: botsDisplayedColumns;"></md-row>
+      </md-table>
+    </div>
+  </div>
+</div>
