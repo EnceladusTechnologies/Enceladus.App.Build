@@ -19,6 +19,7 @@ export class BotStrategyProfileComponent implements OnInit {
   models: TradingModelListItemVM[];
   // modelConfigs: QuestionBase<any>[];
   ConfigBaseControlType = ConfigBaseControlType;
+  orderTypes: any[] = [];
   formGroup: FormGroup;
   constructor(
     private route: ActivatedRoute,
@@ -74,5 +75,7 @@ export class BotStrategyProfileComponent implements OnInit {
         })
     }
   }
+  onSubmit() {
 
+  }
 }

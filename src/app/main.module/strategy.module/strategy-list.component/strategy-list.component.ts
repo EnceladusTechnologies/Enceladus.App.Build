@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { DataSource } from "@angular/cdk/collections";
+import { DataSource } from '@angular/cdk/collections';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import { MainService } from '../../main.service';
@@ -29,11 +29,15 @@ export class StrategyListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.botsDisplayedColumns = ["name", "author", "targetSymbol", "modelName", "modelInputs"];
+    this.botsDisplayedColumns = ['name', 'author', 'targetSymbol', 'modelName', 'modelInputs'];
     this.botsDataSource = new BotListDataSource(this._strategyService);
   }
   viewStrategy(id: number) {
     this.router.navigate(['./', id], { relativeTo: this.route });
+  }
+
+  newBotStrategy() {
+
   }
 }
 export class BotListDataSource extends DataSource<any> {
