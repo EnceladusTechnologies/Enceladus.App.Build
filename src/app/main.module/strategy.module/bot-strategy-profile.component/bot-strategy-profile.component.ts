@@ -42,7 +42,7 @@ export class BotStrategyProfileComponent implements OnInit {
     this.route.data
       .subscribe((data: { botStrategy: BotStrategyVm }) => {
         data.botStrategy.model.configurationQuestions.forEach(q => {
-          q.maskConfig = QuestionBase.CreateMask(q.controlType);
+          // q.maskConfig = QuestionBase.CreateMask(q.controlType);
         })
         this.qcs.addToFormGroup(data.botStrategy.model.configurationQuestions, this.formGroup, false);
         this.model = data.botStrategy;

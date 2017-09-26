@@ -1,6 +1,6 @@
 
-import emailMask from 'text-mask-addons/dist/emailMask';
-import createNumberMask from 'text-mask-addons/dist/createNumberMask'
+// import emailMask from 'text-mask-addons/dist/emailMask';
+// import createNumberMask from 'text-mask-addons/dist/createNumberMask'
 
 export class QuestionBase<T> {
     id: string;
@@ -10,51 +10,51 @@ export class QuestionBase<T> {
     controlType: ConfigBaseControlType;
     helpText: string;
     maskConfig: any = {};
-    public static CreateMask(cntrlType: ConfigBaseControlType)
-        : {} {
-        switch (cntrlType || ConfigBaseControlType.NUMBER) {
-            case ConfigBaseControlType.NONE:
-                return { mask: false, guide: false, placeholderChar: '', pipe: undefined, keepCharPositions: false };
-            case ConfigBaseControlType.NUMBER:
-                return {
-                    mask: createNumberMask({
-                        prefix: '',
-                        suffix: '',
-                        includeThousandsSeparator: true,
-                        thousandsSeparatorSymbol: ',',
-                        allowDecimal: true,
-                        decimalSymbol: '.',
-                        decimalLimit: 0,
-                        integerLimit: null,
-                        requireDecimal: false,
-                        allowNegative: false,
-                        allowLeadingZeroes: false
-                    }),
-                    guide: false,
-                };
-            case ConfigBaseControlType.PERCENTAGE:
-                return {
-                    mask: createNumberMask({
-                        prefix: '',
-                        suffix: '',
-                        includeThousandsSeparator: true,
-                        thousandsSeparatorSymbol: ',',
-                        allowDecimal: true,
-                        decimalSymbol: '.',
-                        decimalLimit: 0,
-                        integerLimit: null,
-                        requireDecimal: false,
-                        allowNegative: false,
-                        allowLeadingZeroes: false
-                    }),
-                    guide: false,
-                };
+    // public static CreateMask(cntrlType: ConfigBaseControlType)
+    //     : {} {
+    //     switch (cntrlType || ConfigBaseControlType.NUMBER) {
+    //         case ConfigBaseControlType.NONE:
+    //             return { mask: false, guide: false, placeholderChar: '', pipe: undefined, keepCharPositions: false };
+    //         case ConfigBaseControlType.NUMBER:
+    //             return {
+    //                 mask: createNumberMask({
+    //                     prefix: '',
+    //                     suffix: '',
+    //                     includeThousandsSeparator: true,
+    //                     thousandsSeparatorSymbol: ',',
+    //                     allowDecimal: true,
+    //                     decimalSymbol: '.',
+    //                     decimalLimit: 0,
+    //                     integerLimit: null,
+    //                     requireDecimal: false,
+    //                     allowNegative: false,
+    //                     allowLeadingZeroes: false
+    //                 }),
+    //                 guide: false,
+    //             };
+    //         case ConfigBaseControlType.PERCENTAGE:
+    //             return {
+    //                 mask: createNumberMask({
+    //                     prefix: '',
+    //                     suffix: '',
+    //                     includeThousandsSeparator: true,
+    //                     thousandsSeparatorSymbol: ',',
+    //                     allowDecimal: true,
+    //                     decimalSymbol: '.',
+    //                     decimalLimit: 0,
+    //                     integerLimit: null,
+    //                     requireDecimal: false,
+    //                     allowNegative: false,
+    //                     allowLeadingZeroes: false
+    //                 }),
+    //                 guide: false,
+    //             };
 
-            default:
-                break;
-        }
-        // Custom: { hasFunction: false, function: undefined, hasMask: true, mask: '' },
-    }
+    //         default:
+    //             break;
+    //     }
+    //     // Custom: { hasFunction: false, function: undefined, hasMask: true, mask: '' },
+    // }
     constructor(options: {
         controlType?: ConfigBaseControlType,
         label?: string,
