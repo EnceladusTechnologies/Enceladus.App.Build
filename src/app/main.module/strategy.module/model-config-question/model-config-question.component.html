@@ -3,15 +3,14 @@
     <mat-form-field style="width: 100%">
       <!-- <mat-icon matPrefix [class.disabled]="true" *ngIf="question.maskType==='UsDollarAmount'">attach_money</mat-icon>
       <span matPrefix [class.disabled]="true" *ngIf="question.maskType==='UsPhoneNumber'">+1  &nbsp;</span> -->
-      <input matInput  [formControlName]="question.id" [(ngModel)]="question.value" [placeholder]="question.label" type="text"
-         [required]="question.required" >
-      <!-- <mat-error *ngIf="form.get(question.id).hasError('pattern')">
+      <input matInput [formControlName]="question.id" [(ngModel)]="question.value" [placeholder]="question.label" type="text" [required]="question.required">
+      <mat-error *ngIf="form.get(question.id).hasError('pattern')">
         Please enter a <strong>valid</strong> {{question.label}}
       </mat-error>
       <mat-error *ngIf="form.get(question.id).hasError('required')">
         {{question.label}} is <strong>required</strong>
       </mat-error>
-      <mat-error *ngIf="form.get(question.id).hasError('maxValue')">
+      <!-- <mat-error *ngIf="form.get(question.id).hasError('maxValue')">
         {{question.label}} must be <strong>less</strong> than {{question.maxValue | number}}
       </mat-error>
       <mat-error *ngIf="form.get(question.id).hasError('minValue')">
