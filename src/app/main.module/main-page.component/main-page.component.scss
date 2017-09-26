@@ -1,4 +1,25 @@
 @import '../main.styles.scss';
+.nav-list{
+  padding: 0;
+  border-top: 3 solid #b52329;
+}
+
+.copyright{
+  font-size: 10.5px;
+  position: fixed;
+  left: 40px;
+  bottom: 5px;
+}
+
+mat-toolbar {
+  position: relative;
+  z-index: 10;
+}
+
+.text-no-wrap {
+  white-space: nowrap !important;
+  margin: 0 !important;
+}
 
 app-main-page {
   position: absolute;

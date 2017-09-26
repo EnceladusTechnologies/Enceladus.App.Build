@@ -72,29 +72,29 @@ export class IntrinioService {
         //     return Observable.of(this._cacheService.get(cacheKey));
         // } else {
 
-        let exch = new Array<ExchangeListItem>();
-        let amx = new ExchangeListItem();
+        const exch = new Array<ExchangeListItem>();
+        const amx = new ExchangeListItem();
         amx.acronym = 'NASDAQ';
         amx.symbol = '^XNAS';
         amx.institution_name = 'NASDAQ';
         amx.mic = 'XNAS';
         exch.push(amx);
 
-        let nyse = new ExchangeListItem();
+        const nyse = new ExchangeListItem();
         nyse.acronym = 'NYSE';
         nyse.symbol = '^XNYS';
         nyse.institution_name = 'New York Stock Exchange, Inc.';
         nyse.mic = 'XNYS';
         exch.push(nyse);
 
-        let bat = new ExchangeListItem();
+        const bat = new ExchangeListItem();
         bat.acronym = 'BATS';
         bat.mic = 'BATS';
         bat.symbol = '^BATS';
         bat.institution_name = 'Bats Z-Exchange';
         exch.push(bat);
 
-        let otc = new ExchangeListItem();
+        const otc = new ExchangeListItem();
         otc.acronym = 'OTCBB';
         otc.mic = 'XOTC';
         otc.institution_name = 'OTCBB';
@@ -128,7 +128,8 @@ export class IntrinioService {
         // }
     }
 
-    public getHistoricalPriceData(ticker: string, startDate: string, endDate: string, frequency: Frequency, forceRefresh?: boolean): Observable<PriceListItem[]> {
+    public getHistoricalPriceData(ticker: string, startDate: string, endDate: string, frequency: Frequency, forceRefresh?: boolean)
+        : Observable<PriceListItem[]> {
         // const cacheKey = cacheKeys.applePrices;
         // if (!forceRefresh && this._cacheService.exists(cacheKey)) {
         //     return Observable.of(this._cacheService.get(cacheKey));
@@ -141,8 +142,10 @@ export class IntrinioService {
             })
             .catch(this.handleError);
             */
-        let freq = this._FrequencyEnum[frequency];
-        return this._http.get(`${this._baseUrl}/prices?frequency=${freq}&identifier=${ticker}&start_date=${startDate}&end_date=${endDate}&page_size=5000`, this._opts)
+        const freq = this._FrequencyEnum[frequency];
+        return this._http
+            .get(`${this._baseUrl}/prices?frequency=${freq}&identifier=${ticker}&start_date=${startDate}&end_date=${endDate}&page_size=5000`
+            , this._opts)
             .map((resp: any) => {
                 const getResponse = <HttpGetResponse>resp.json();
                 // this._cacheService.set(cacheKey, <PriceListItem[]>getResponse.data, { maxAge: this._config.maxAge });

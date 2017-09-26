@@ -11,9 +11,9 @@ import { MainDataService } from './main.module/main-data.service';
 
 import 'hammerjs';
 
-import { AuthService } from "./auth.service";
-import { CallbackComponent } from "./callback.component/callback.component";
-
+import { AuthService } from './auth.service';
+import { CallbackComponent } from './callback.component/callback.component';
+import { MATERIAL_COMPATIBILITY_MODE } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -28,7 +28,10 @@ import { CallbackComponent } from "./callback.component/callback.component";
     HttpModule,
     InMemoryWebApiModule.forRoot(MainDataService, { passThruUnknownUrl: true }),
   ],
-  providers: [AuthService],
+  providers: [
+    AuthService,
+    { provide: MATERIAL_COMPATIBILITY_MODE, useValue: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

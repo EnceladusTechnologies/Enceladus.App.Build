@@ -28,9 +28,13 @@ export class SecuritiesListItem {
     figi: string;               // figi - the OpenFIGI identifier
     security_name: string;      // security_name - the security description as provided by the exchange
     market_sector: string;      // market_sector - the type of market for the security
-    security_type: string;      // security_type - the type of security, such as Common Stock, Preferred Stock, Warrants, Limited Partnership Interests, etc.
-    stock_exchange: string;     // stock_exchange - the Stock Exchange (and market category) where the company’s common stock is primarily traded
-    last_crsp_adj_date: string; // last_crsp_adj_date - the last recorded date (“YYYY-MM-DD”) of an CRSP adjustment made to prior prices due to a stock split or dividend event.
+    // security_type - the type of security, such as Common Stock, Preferred Stock, Warrants, Limited Partnership Interests, etc.
+    security_type: string;
+    // stock_exchange - the Stock Exchange (and market category) where the company’s common stock is primarily traded
+    stock_exchange: string;
+    // last_crsp_adj_date - the last recorded date (“YYYY-MM-DD”)
+    // of an CRSP adjustment made to prior prices due to a stock split or dividend event.
+    last_crsp_adj_date: string;
     composite_figi: string;     // composite_figi - the security’s composite FIGI identifier
     figi_uniqueid: string;      // figi_uniqueid - the security’s unique FIGI identifier
     share_class_figi: string;   // share_class_figi - the security’s share class FIGI identifier
@@ -39,8 +43,12 @@ export class SecuritiesListItem {
     mic: string;                // mic - the Market Identification Code for the Stock Exchange where the security is listed.
     exch_symbol: string;        // exch_symbol - the Intrinio Stock Exchange Symbol used as an identifier on the Intrinio API.
     etf: string;                // etf - a boolean to represent whether the security is an ETF or otherwise
-    delisted_security: string;  // delisted_security - if the security is no longer traded on public exchanges, the security will be considered delisted and the security no longer will report pricing data.
-    primary_listing: string;    // primary_listing - a boolean to represent whether the security is the primary issue or a secondary issue of the security on a different stock exchange.
+    // delisted_security - if the security is no longer traded on public exchanges, the security will be considered
+    // delisted and the security no longer will report pricing data.
+    delisted_security: string;
+    // primary_listing - a boolean to represent whether the security is the primary
+    // issue or a secondary issue of the security on a different stock exchange.
+    primary_listing: string;
 }
 
 export class CompanyListItem {

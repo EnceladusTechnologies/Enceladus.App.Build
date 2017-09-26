@@ -1,0 +1,65 @@
+<form  [formGroup]="formGroup" (ngSubmit)="onSubmit()" style="height: 100%;">
+  <app-component-spinner [busy]="isBusy"></app-component-spinner>
+
+  <div fxLayout="column" fxLayoutAlign="start center" fxFill>
+    <div fxLayout="column" fxLayoutAlign="start center">
+      <mat-toolbar>
+        <button mat-mini-fab type="button" [routerLink]="['../']">
+        <mat-icon fontSet="mdi" class="mdi-24px" fontIcon="mdi-arrow-left-bold-hexagon-outline"></mat-icon>
+      </button> &nbsp;&nbsp; {{model.name}}
+        <span fxFlex></span>
+        <button mat-raised-button type="submit" [disabled]="!formGroup.valid || formGroup.pristine">Save</button>
+      </mat-toolbar>
+      <div fxLayout="column" fxLayoutAlign="start stretch" fxFill style="padding: 3em;">
+        <div fxLayout="row" fxLayoutAlign="start center" class="double-cntrl">
+          <mat-form-field>
+            <input matInput formControlName="nameCntrl" placeholder="Name" [(ngModel)]="model.name" required>
+            <mat-error *ngIf="formGroup.get('nameCntrl').hasError('required') && !formGroup.get('nameCntrl').pristine">
+              Name is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start center" class="single-cntrl">
+          <mat-form-field>
+            <input matInput formControlName="descCntrl" placeholder="Description" [(ngModel)]="model.description" required>
+            <mat-error *ngIf="formGroup.get('descCntrl').hasError('required') && !formGroup.get('descCntrl').pristine">
+              Description is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start center" class="double-cntrl">
+          <mat-form-field>
+            <input matInput formControlName="orderTypeCntrl" placeholder="Order Type" [(ngModel)]="model.orderType" required [disabled]="true" 
+              [matAutocomplete]="autoOrderType">
+            <mat-error *ngIf="formGroup.get('orderTypeCntrl').hasError('required') && !formGroup.get('orderTypeCntrl').pristine">
+              Order Type is required
+            </mat-error>
+          </mat-form-field>
+          <mat-autocomplete #autoOrderType="matAutocomplete">
+            <mat-option *ngFor="let orderType of orderTypes" [value]="orderType">
+              {{ orderType }}
+            </mat-option>
+          </mat-autocomplete>
+          <mat-form-field>
+            <input matInput formControlName="amntCntrl" placeholder="Order Amount" type="number" min="1" [(ngModel)]="model.orderAmount" required>
+            <mat-error *ngIf="formGroup.get('amntCntrl').hasError('required') && !formGroup.get('amntCntrl').pristine">
+              Order Amount is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="stretch center" class="single-cntrl">
+          <mat-select placeholder="Model" formControlName="modelCntrl" [(ngModel)]="model.model.id" (ngModelChange)="modelChanged($event)">
+            <mat-option *ngFor="let model of models" [value]="model.id">
+              {{ model.name }}
+            </mat-option>
+          </mat-select>
+        </div>
+        <div fxLayout="column" fxLayoutAlign="start stretch" class="single-cntrl model-config">
+          <div *ngFor="let question of model.model.configurationQuestions">
+              <app-model-config-question [question]="question" [form]="formGroup"></app-model-config-question>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,20 @@
+<mat-table #table [dataSource]="modelsDataSource">
+  <ng-container matColumnDef="name">
+    <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="author">
+    <mat-header-cell *matHeaderCellDef> Author </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.author}} </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="description">
+    <mat-header-cell *matHeaderCellDef> Description </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.description}} </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="modelInputs">
+    <mat-header-cell *matHeaderCellDef> Inputs </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.modelInputs}} </mat-cell>
+  </ng-container>
+  <mat-header-row *matHeaderRowDef="modelsDisplayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: modelsDisplayedColumns;"></mat-row>
+</mat-table>

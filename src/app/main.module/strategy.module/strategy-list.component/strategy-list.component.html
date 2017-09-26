@@ -1,0 +1,34 @@
+<mat-toolbar>
+  <div fxFlexAlign="center">
+    <mat-icon fontSet="mdi" class="mdi-40px" fontIcon="mdi-robot"></mat-icon>
+  </div>
+  <span style="margin-left:2em;">Bot Strategies</span>
+  <span fxFlex></span>
+  <button mat-mini-fab (click)="newBotStrategy()">
+    <mat-icon fontSet="mdi" class="mdi-24px" fontIcon="mdi-plus"></mat-icon>
+  </button>
+</mat-toolbar>
+<mat-table #table [dataSource]="botsDataSource">
+  <ng-container matColumnDef="name">
+    <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="author">
+    <mat-header-cell *matHeaderCellDef> Author </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.author}} </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="targetSymbol">
+    <mat-header-cell *matHeaderCellDef> Target Symbol </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.targetSymbol}} </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="modelName">
+    <mat-header-cell *matHeaderCellDef> Model Name </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.modelName}} </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="modelInputs">
+    <mat-header-cell *matHeaderCellDef> Model Inputs </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.modelInputs}} </mat-cell>
+  </ng-container>
+  <mat-header-row *matHeaderRowDef="botsDisplayedColumns"></mat-header-row>
+  <mat-row (click)="viewStrategy(row.id)" *matRowDef="let row; columns: botsDisplayedColumns;"></mat-row>
+</mat-table>

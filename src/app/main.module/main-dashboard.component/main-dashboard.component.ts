@@ -18,7 +18,7 @@ import { MainService } from '../main.service';
 import { IntrinioService } from '../intrinio.service';
 import { FormControl, NgControl, NgModel } from '@angular/forms';
 import { BotListItemVM, BotResultVM } from 'app/shared.module/models/bots-vm';
-import { DataSource } from "@angular/cdk/collections";
+import { DataSource } from '@angular/cdk/collections';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import { FieldMaps, ChartConfig, amChart } from 'app/shared.module/models/chart-vm';
@@ -83,7 +83,7 @@ export class MainDashboardComponent implements OnInit {
 
   ngOnInit() {
     // this.getExchanges(true);
-    this.botsDisplayedColumns = ["name", "author", "modelInputs", "run-simulation"];
+    this.botsDisplayedColumns = ['name', 'author', 'modelInputs', 'run-simulation'];
     this.botsDataSource = new BotListDataSource(this._mainService);
 
     this.setupChart(ChartConfigs.StockChart);
@@ -142,7 +142,13 @@ export class MainDashboardComponent implements OnInit {
   public getPriceData(forceRefresh?: boolean) {
     this.isChartBusy = true;
     this._intrinioService
-      .getHistoricalPriceData(this.selectedSecurity.ticker, this.startDate.toISOString().slice(0, 10), this.endDate.toISOString().slice(0, 10), this.selectedFrequency, forceRefresh)
+      .getHistoricalPriceData(
+      this.selectedSecurity.ticker,
+      this.startDate.toISOString().slice(0, 10),
+      this.endDate.toISOString().slice(0, 10),
+      this.selectedFrequency,
+      forceRefresh
+      )
       .subscribe(k => {
         setTimeout(() => {
           this.companyPriceData = k.sort((a: PriceListItem, b: PriceListItem) => {
@@ -210,16 +216,16 @@ export class MainDashboardComponent implements OnInit {
   }
 
   setupChart(config: ChartConfig) {
-    this.stockChart = AmCharts.makeChart("stockChart", config);
+    this.stockChart = AmCharts.makeChart('stockChart', config);
     this.stockChart.dataSets.push({
-      title: "Target Stock Data",
+      title: 'Target Stock Data',
       fieldMappings: FieldMaps.candleFieldMap,
       dataProvider: this.chartData1,
-      categoryField: "date",
+      categoryField: 'date',
       compared: false
     });
     this.stockChart.dataSets.push({
-      title: "Signal Data",
+      title: 'Signal Data',
       fieldMappings: [
         {
           fromField: 'portfolioValue',
@@ -227,7 +233,7 @@ export class MainDashboardComponent implements OnInit {
         }
       ],
       dataProvider: this.chartData2,
-      categoryField: "date",
+      categoryField: 'date',
       compared: true
     });
   }
@@ -279,7 +285,7 @@ export class MainDashboardComponent implements OnInit {
     this.isChartBusy = true;
     this._mainService.simulateBot(bot.id)
       .subscribe(k => {
-        
+
         k.tradeBook.series.forEach(item => {
           item.date = new Date(item.date)
         });
@@ -301,7 +307,7 @@ export class MainDashboardComponent implements OnInit {
 
 
         this.stockChart.validateData();
-        
+
         this.currentBot = k;
         this.isChartBusy = false;
       }, err => {

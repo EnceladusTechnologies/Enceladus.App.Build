@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MdIconModule, MdSnackBarModule, MdSnackBar, MdCoreModule, MdInputModule, MdButtonModule } from '@angular/material';
+import { MatIconModule, MatSnackBarModule, MatSnackBar, MatInputModule, MatButtonModule } from '@angular/material';
 import { FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { LoginRoutingModule } from './login-routing.module';
@@ -15,17 +15,16 @@ import { LoginPageComponent } from './login-page.component/login-page.component'
     CommonModule,
     FlexLayoutModule,
     FormsModule,
-    MdInputModule,
-    MdButtonModule,
-    MdSnackBarModule,
-    MdCoreModule,
-    MdIconModule,
+    MatInputModule,
+    MatButtonModule,
+    MatSnackBarModule,
+    MatIconModule,
     LoginRoutingModule
   ],
   declarations: [
     LoginComponent,
     LoginPageComponent
   ],
-  providers: [LoginService, MdSnackBar]
+  providers: [LoginService, MatSnackBar]
 })
 export class LoginModule { }
