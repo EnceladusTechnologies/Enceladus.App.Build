@@ -39,7 +39,8 @@ export class SimulationDashboardComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.botsDisplayedColumns = ["name", "author", "modelInputs", "run-simulation"];
+
+    this.botsDisplayedColumns = ['name', 'author', 'modelInputs', 'run-simulation'];
     this.botsDataSource = new BotListDataSource(this._mainService);
 
     this.setupChart(ChartConfigs.StockChart);
@@ -54,7 +55,8 @@ export class SimulationDashboardComponent implements OnInit, OnDestroy {
 
   setupChart(config: ChartConfig) {
 
-    this.stockChart = AmCharts.makeChart("stockChart", config);
+
+    this.stockChart = AmCharts.makeChart('stockChart', config);
     if (AmCharts.enceladus_initialized) {
       if (AmCharts.currentBot) {
         this.currentBot = AmCharts.currentBot;
@@ -62,14 +64,16 @@ export class SimulationDashboardComponent implements OnInit, OnDestroy {
       return;
     }
     this.stockChart.dataSets.push({
-      title: "Target Stock Data",
+
+      title: 'Target Stock Data',
       fieldMappings: FieldMaps.candleFieldMap,
       dataProvider: this.chartData1,
-      categoryField: "date",
+      categoryField: 'date',
       compared: false
     });
     this.stockChart.dataSets.push({
-      title: "Signal Data",
+      title: 'Signal Data',
+
       fieldMappings: [
         {
           fromField: 'portfolioValue',
@@ -77,11 +81,13 @@ export class SimulationDashboardComponent implements OnInit, OnDestroy {
         }
       ],
       dataProvider: this.chartData2,
-      categoryField: "date",
+
+      categoryField: 'date',
       compared: true
     });
     AmCharts['enceladus_initialized'] = true;
-    console.log('post initial', AmCharts.charts);
+    // console.log('post initial', AmCharts.charts);
+
   }
 
 
@@ -99,7 +105,9 @@ export class SimulationDashboardComponent implements OnInit, OnDestroy {
           item.graph = 'g1';
           item.date = new Date(item.date)
         });
-        console.log(k);
+
+        // console.log(k);
+
         this.chartData2 = k.tradeBook.tradeEntries;
 
         this.stockChart.dataSets[0].title = k.targetTicker;

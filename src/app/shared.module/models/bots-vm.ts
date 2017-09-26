@@ -1,3 +1,5 @@
+import { QuestionBase } from '../../main.module/strategy.module/model-config-question/question-types';
+
 
 export class BotResultVM {
     id: number;
@@ -18,9 +20,9 @@ export class BotResultVM {
     startDate: Date;
     tradeBook: TradeBook;
 }
-export class BotVM {
+export class BotStrategyVm {
     id: string;
-    model: ITradingModel;
+    model: TradingModelVm;
     name: string;
     description: string;
     author: string;
@@ -29,13 +31,15 @@ export class BotVM {
 }
 export class BotListItemVM {
     id: string;
-    model: ITradingModel;
+    // model: ITradingModel;
     name: string;
     description: string;
     author: string;
     orderType: string;
     orderAmount: string;
+    modelName: string;
     modelInputs: string;
+    targetSymbol: string;
 }
 
 export class TradeBook {
@@ -83,26 +87,21 @@ export class TradingStats {
 }
 
 
-export class ITradingModel {
+export class TradingModelVm {
     id: string;
     name: string;
     description: string;
     author: string;
-    configurationQuestions: ConfigBase[];
+    tradingModelInputs: string;
+    configurationQuestions: QuestionBase<any>[];
 }
 
-export class ConfigBase {
+export class TradingModelListItemVM {
     id: string;
-    label: string;
-    value: string;
-    required: boolean;
-    controlType: ConfigBaseControlType;
-    order: number;
-    helpText: string;
+    name: string;
+    description: string;
+    author: string;
+    modelInputs: string;
 }
 
-export enum ConfigBaseControlType {
-    Dropdown = 0,
-    Number = 1,
-    Checkbox = 2
-}
+

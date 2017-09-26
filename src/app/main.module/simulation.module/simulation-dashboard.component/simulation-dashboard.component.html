@@ -1,65 +1,68 @@
 <div fxLayout="row" fxLayoutAlign="start stretch" style="height: 100%">
   <app-component-spinner [busy]="isBusy"></app-component-spinner>
   <div fxFlex="25">
-    <md-card>
-      <md-card-header>
-        <md-icon md-card-avatar class="mdi-45px" fontSet="mdi" fontIcon="mdi-robot"></md-icon>
-        <md-card-title>{{currentBot?.name}}</md-card-title>
-        <md-card-subtitle>{{currentBot?.description}}</md-card-subtitle>
-      </md-card-header>
-      <md-card-content fxLayout="column" fxLayoutAlign="start stretch" *ngIf="!!currentBot" style="color: white;padding: 10px;">
+
+    <mat-card>
+      <mat-card-header>
+        <mat-icon mat-card-avatar class="mdi-45px" fontSet="mdi" fontIcon="mdi-robot"></mat-icon>
+        <mat-card-title>{{currentBot?.name}}</mat-card-title>
+        <mat-card-subtitle>{{currentBot?.description}}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content fxLayout="column" fxLayoutAlign="start stretch" *ngIf="!!currentBot" style="color: white;padding: 10px;">
         <span><strong>Author: </strong><em>{{currentBot?.Author}}</em></span>
         <span><strong>Start Date: </strong><em>{{currentBot?.startDate | date}}</em></span>
-      </md-card-content>
-    </md-card>
-    <md-card>
-      <md-card-header>
-        <md-icon md-card-avatar class="mdi-45px" fontSet="mdi" fontIcon="mdi-signal"></md-icon>
-        <md-card-title>{{currentBot?.modelName}}</md-card-title>
-        <md-card-subtitle>{{currentBot?.modelDescription}}</md-card-subtitle>
-      </md-card-header>
-      <md-card-content fxLayout="column" fxLayoutAlign="start stretch" *ngIf="!!currentBot" style="color: white;padding: 10px;">
+      </mat-card-content>
+    </mat-card>
+    <mat-card>
+      <mat-card-header>
+        <mat-icon mat-card-avatar class="mdi-45px" fontSet="mdi" fontIcon="mdi-signal"></mat-icon>
+        <mat-card-title>{{currentBot?.modelName}}</mat-card-title>
+        <mat-card-subtitle>{{currentBot?.modelDescription}}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content fxLayout="column" fxLayoutAlign="start stretch" *ngIf="!!currentBot" style="color: white;padding: 10px;">
         <span><strong>Author: </strong><em>{{currentBot?.modelAuthor}}</em></span>
-      </md-card-content>
-    </md-card>
-    <md-card>
-      <md-card-header>
-        <md-icon md-card-avatar class="mdi-45px" fontSet="mdi" fontIcon="mdi-beta"></md-icon>
-        <md-card-title>Statistics</md-card-title>
-      </md-card-header>
-      <md-card-content fxLayout="column" fxLayoutAlign="start stretch" *ngIf="!!currentBot" style="color: white;padding: 10px;">
+      </mat-card-content>
+    </mat-card>
+    <mat-card>
+      <mat-card-header>
+        <mat-icon mat-card-avatar class="mdi-45px" fontSet="mdi" fontIcon="mdi-beta"></mat-icon>
+        <mat-card-title>Statistics</mat-card-title>
+      </mat-card-header>
+      <mat-card-content fxLayout="column" fxLayoutAlign="start stretch" *ngIf="!!currentBot" style="color: white;padding: 10px;">
         <span><strong>Profit &amp; Loss: </strong><em>{{currentBot?.tradeBook.tradingStats.totalPnL/100 | currency:'USD':true:'1.2-2'}}</em></span>
         <span><strong>Win Pct: </strong><em>{{currentBot?.tradeBook.tradingStats.winPct}}%</em></span>
-      </md-card-content>
-    </md-card>
+      </mat-card-content>
+    </mat-card>
+
   </div>
   <div fxFlex fxLayout="column" fxLayoutAlign="start stretch">
     <div fxFlex="70" id="stockChart"></div>
     <div fxFlex style="background-color:darkgrey">
-      <md-table #table [dataSource]="botsDataSource">
-        <ng-container mdColumnDef="name">
-          <md-header-cell *mdHeaderCellDef> Name </md-header-cell>
-          <md-cell *mdCellDef="let element"> {{element.name}} </md-cell>
+
+      <mat-table #table [dataSource]="botsDataSource">
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
         </ng-container>
-        <ng-container mdColumnDef="author">
-          <md-header-cell *mdHeaderCellDef> Author </md-header-cell>
-          <md-cell *mdCellDef="let element"> {{element.author}} </md-cell>
+        <ng-container matColumnDef="author">
+          <mat-header-cell *matHeaderCellDef> Author </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.author}} </mat-cell>
         </ng-container>
-        <ng-container mdColumnDef="modelInputs">
-          <md-header-cell *mdHeaderCellDef> Target </md-header-cell>
-          <md-cell *mdCellDef="let element"> {{element.modelInputs}} </md-cell>
+        <ng-container matColumnDef="modelInputs">
+          <mat-header-cell *matHeaderCellDef> Target </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.modelInputs}} </mat-cell>
         </ng-container>
-        <ng-container mdColumnDef="run-simulation">
-          <md-header-cell *mdHeaderCellDef> </md-header-cell>
-          <md-cell *mdCellDef="let element">
-            <button md-icon-button (click)="runSimulation(element)"> 
-                  <md-icon  class="mdi-24px" fontSet="mdi" fontIcon="mdi-play-circle"></md-icon>
+        <ng-container matColumnDef="run-simulation">
+          <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <button mat-icon-button (click)="runSimulation(element)"> 
+                  <mat-icon  class="mdi-24px" fontSet="mdi" fontIcon="mdi-play-circle"></mat-icon>
               </button>
-          </md-cell>
+          </mat-cell>
         </ng-container>
-        <md-header-row *mdHeaderRowDef="botsDisplayedColumns"></md-header-row>
-        <md-row *mdRowDef="let row; columns: botsDisplayedColumns;"></md-row>
-      </md-table>
+        <mat-header-row *matHeaderRowDef="botsDisplayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: botsDisplayedColumns;"></mat-row>
+      </mat-table>
     </div>
   </div>
 </div>

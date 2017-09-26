@@ -1,0 +1,35 @@
+<div [formGroup]="form" [ngSwitch]="question.controlType" style="width: 100%; height: 100%; position: relative;">
+  <div *ngSwitchCase="ConfigBaseControlType.NUMBER" fxLayout="row" fxLayoutAlign="center center">
+    <mat-form-field style="width: 100%">
+      <!-- <mat-icon matPrefix [class.disabled]="true" *ngIf="question.maskType==='UsDollarAmount'">attach_money</mat-icon>
+      <span matPrefix [class.disabled]="true" *ngIf="question.maskType==='UsPhoneNumber'">+1  &nbsp;</span> -->
+      <input matInput  [formControlName]="question.id" [(ngModel)]="question.value" [placeholder]="question.label" type="text"
+         [required]="question.required" >
+      <!-- <mat-error *ngIf="form.get(question.id).hasError('pattern')">
+        Please enter a <strong>valid</strong> {{question.label}}
+      </mat-error>
+      <mat-error *ngIf="form.get(question.id).hasError('required')">
+        {{question.label}} is <strong>required</strong>
+      </mat-error>
+      <mat-error *ngIf="form.get(question.id).hasError('maxValue')">
+        {{question.label}} must be <strong>less</strong> than {{question.maxValue | number}}
+      </mat-error>
+      <mat-error *ngIf="form.get(question.id).hasError('minValue')">
+        {{question.label}} must be <strong>greater</strong> than {{question.minValue | number}}
+      </mat-error> -->
+
+      <mat-icon matSuffix *ngIf="question.helpText" fontSet="mdi" fontIcon="mdi-help-box" class="mdi-24px" [matTooltip]="question.helpText"
+        [class.disabled]="true" style="cursor: default;">
+      </mat-icon>
+    </mat-form-field>
+  </div>
+  <div *ngSwitchCase="ConfigBaseControlType.PERCENTAGE" fxLayout="row" fxLayoutAlign="center center">
+    PERCENTAGE
+  </div>
+  <div *ngSwitchCase="ConfigBaseControlType.DROPDOWN" fxLayout="row" fxLayoutAlign="center center">
+    DROPDOWN
+  </div>
+  <div *ngSwitchCase="ConfigBaseControlType.CHECKBOX" fxLayout="row" fxLayoutAlign="center center">
+    CHECKBOX
+  </div>
+</div>

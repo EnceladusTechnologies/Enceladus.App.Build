@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
-
+import { TextMaskModule } from 'angular2-text-mask';
 import { MaterialModule } from './material.module/material.module';
 
 import { ComponentSpinnerComponent } from './component-spinner.component/component-spinner.component';
@@ -12,6 +12,7 @@ import { ComponentSpinnerComponent } from './component-spinner.component/compone
     CommonModule,
     FormsModule,
     FlexLayoutModule,
+    TextMaskModule,
     MaterialModule
   ],
   declarations: [
@@ -22,7 +23,8 @@ import { ComponentSpinnerComponent } from './component-spinner.component/compone
     FormsModule,
     FlexLayoutModule,
     MaterialModule,
-    ComponentSpinnerComponent
+    ComponentSpinnerComponent,
+    TextMaskModule
   ]
 })
 export class SharedModule { }

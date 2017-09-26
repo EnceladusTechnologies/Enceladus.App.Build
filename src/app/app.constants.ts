@@ -1,6 +1,8 @@
 export const cacheKeys = {
     bots: ':bots',
 
+    models: ':models',
+
     exchanges: ':exchanges',
 
     // companies

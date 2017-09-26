@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { MdSnackBar, MdSnackBarConfig } from '@angular/material';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
 
 @Injectable()
 export class SnackBarService {
 
-    private _errorSnackBarConfig = new MdSnackBarConfig();
-    private _infoSnackBarConfig = new MdSnackBarConfig();
-    private _successSnackBarConfig = new MdSnackBarConfig();
+    private _errorSnackBarConfig = new MatSnackBarConfig();
+    private _infoSnackBarConfig = new MatSnackBarConfig();
+    private _successSnackBarConfig = new MatSnackBarConfig();
 
     constructor(
-        private _snackBar: MdSnackBar,
+        private _snackBar: MatSnackBar,
         private _router: Router) {
         this._errorSnackBarConfig.duration = 3000;
         this._errorSnackBarConfig.extraClasses = ['error-snackbar'];

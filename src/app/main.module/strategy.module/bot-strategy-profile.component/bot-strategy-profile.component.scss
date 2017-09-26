@@ -1,0 +1,22 @@
+
+
+
+.single-cntrl mat-select, .single-cntrl mat-form-field  {
+    width: 40vw;
+    min-width: 400px;
+    // margin-left: 10px;
+    margin-right: 0px;
+}
+
+.double-cntrl mat-select, .double-cntrl mat-form-field  {
+    width: 20vw;
+    min-width: 200px;
+    // margin-left: 10px;
+    margin-right: 10px;
+}
+
+.model-config {
+    background-color: #404040;
+    padding: 1em;
+    margin-top: 10px;
+}

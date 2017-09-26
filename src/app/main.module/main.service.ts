@@ -10,7 +10,7 @@ import { AuthHttpService } from 'app/core.module/services/auth-http.service';
 import { ConfigurationService } from 'app/core.module/services/configuration.service';
 import { CacheService } from 'ng2-cache/ng2-cache';
 import { cacheKeys } from 'app/app.constants';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { BotListItemVM, TradeBook, BotResultVM } from 'app/shared.module/models/bots-vm';
 
 @Injectable()
