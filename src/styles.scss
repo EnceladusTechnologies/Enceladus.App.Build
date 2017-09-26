@@ -1,4 +1,58 @@
 @import '~@angular/material/theming';
+/*Variables*/
+$primary-dark-3:#001D30;
+$primary-dark-2:#003B5F;
+$primary-dark-1:#00588F;
+$primary-color: #b52329;
+$primary-light-1: #4098CE;
+$primary-light-2: #80BADF;
+$primary-light-3: #BFDDEF;
+
+$secondary-color: #29971D;
+
+$tertiary-dark-3: #202528;
+$tertiary-dark-2: #40494f;
+$tertiary-dark-1: #5f6e77;
+$tertiary: #7f929e;
+$tertiary-light-1: #9fadb6;
+$tertiary-light-2: #bfc9cf;
+$tertiary-light-3: #dfe4e7;
+$white: #ffffff;
+
+$item-focus-bg: #d4d4d4;
+$item-hover-bg: #f4f4f4;
+$item-border-c: #ebebeb;
+
+$avatar-bg: #3b3b3b;
+
+$border-color: #808080;
+$border-width: 2px;
+
+$invalid-c: #a94442;
+$valid-c: #42A948;
+$warning-c: #F0AD45;
+
+$ng-accent:#009486;
+
+/* light theme material colors  */
+
+$status-bar-light: #E0E0E0;
+$app-bar-light: #F5F5F5;
+$background-light: #FAFAFA;
+$cards-dialogs-light: #FFF;
+
+/* dark theme material colors */
+
+$status-bar-dark: #000;
+$app-bar-dark: #212121;
+$background-dark: #303030;
+$cards-dialogs-dark: #424242;
+// FONT FAMILY VARIABLES
+$font-family: 'Rubik', sans-serif;
+
+// FONT WEIGHT VARIABLES
+$normal: 400;
+$bold: 500;
 
 html {
     margin: 0;
@@ -36,6 +90,7 @@ body {
     border-radius: 100%;
 
 }
+
 #preloader {
     position: fixed;
     top: 0;

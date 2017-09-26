@@ -5,7 +5,9 @@ import { ModelPageComponent } from './model-page.component/model-page.component'
 import { Routes, RouterModule } from '@angular/router';
 import { ModelGuardService } from './model-guard.service';
 import { SharedModule } from '../../shared.module/shared.module';
+
 import { ModelService } from './model.service';
+
 const mainRoutes: Routes = [
   {
     path: '',
@@ -29,6 +31,7 @@ const mainRoutes: Routes = [
     RouterModule.forChild(mainRoutes),
     SharedModule
   ],
+
   declarations: [
     ModelListComponent,
     ModelPageComponent
@@ -37,5 +40,6 @@ const mainRoutes: Routes = [
     ModelGuardService,
     ModelService
   ]
+
 })
 export class ModelModule { }

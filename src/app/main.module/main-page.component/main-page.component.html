@@ -1,3 +1,4 @@
+
 <mat-toolbar class="nav-toolbar" color="accent">
   <button mat-icon-button (click)="sidenav.toggle()">
     <mat-icon fontSet="mdi" class="mdi-18px" fontIcon="mdi-menu"></mat-icon>
@@ -16,6 +17,7 @@
         </div>
         <span class="profile-name">Enceladus Technologies</span>
       </div>
+
     </mat-toolbar>
     <mat-nav-list class="nav-list">
       <div class="menu-item" (click)="sidenav.toggle()">
@@ -42,13 +44,14 @@
           </div>
         </a>
       </div>
+
     </mat-nav-list>
     <div class="copyright">
       © 2017 Enceladus Technologies LLC. All rights reserved.
     </div>
   </mat-sidenav>
-
   <div style="height: 100%;">
     <router-outlet></router-outlet>
   </div>
+
 </mat-sidenav-container>

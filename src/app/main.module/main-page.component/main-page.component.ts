@@ -11,6 +11,7 @@ import { Title } from '@angular/platform-browser';
 })
 export class MainPageComponent {
   pageTitle: string;
+
   selectedRoute: any;
   constructor(
     private auth: AuthService,
@@ -22,6 +23,7 @@ export class MainPageComponent {
       (value: Event) => {
         if (value instanceof NavigationEnd) {
           this.selectedRoute = this._router.url;
+
           const currentRoute = this._activatedRoute.root;
           const data = currentRoute.snapshot.data;
           this.pageTitle = JSON.parse(JSON.stringify(data)).title;

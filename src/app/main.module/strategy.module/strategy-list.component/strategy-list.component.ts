@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+
 import { DataSource } from "@angular/cdk/collections";
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
@@ -8,12 +9,14 @@ import { BotListItemVM } from '../../../shared.module/models/bots-vm';
 import { StrategyService } from 'app/main.module/strategy.module/strategy.service';
 import { Router, ActivatedRoute } from '@angular/router';
 
+
 @Component({
   selector: 'app-strategy-list',
   templateUrl: './strategy-list.component.html',
   styleUrls: ['./strategy-list.component.scss']
 })
 export class StrategyListComponent implements OnInit {
+
   isBusy: boolean;
   botStrategies: BotListItemVM[];
   botsDisplayedColumns: string[];
@@ -40,3 +43,4 @@ export class BotListDataSource extends DataSource<any> {
   }
   disconnect() { }
 }
+
